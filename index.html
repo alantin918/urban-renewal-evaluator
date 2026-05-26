@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>危老重建「地主自建」卡關評估與調整建議系統</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fa-solid fa-building-circle-arrow-right brand-icon"></i>
+                <span class="brand-text">危老重建<span>自建評估</span></span>
+            </div>
+            <div class="header-tag">地主自建專用診斷工具</div>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <!-- 1. 歡迎首頁區 -->
+        <section id="section-welcome" class="card active">
+            <div class="welcome-hero">
+                <div class="badge">危老重建 • 地主自建</div>
+                <h1>您正處於自主重建的十字路口嗎？</h1>
+                <p class="subtitle">「地主自建」能拿回最大坪數與主導權，但缺乏建商支援，常因融資、整合、營造上漲等難題而停滯不前。本工具為您進行全面性的卡關評估，協助您找出破局關鍵！</p>
+                
+                <div class="pain-points-grid">
+                    <div class="pain-point-item">
+                        <div class="icon-wrapper"><i class="fa-solid fa-coins text-gold"></i></div>
+                        <h3>資金籌措難</h3>
+                        <p>自籌期初資金不足，銀行土建融額度與成數限制多。</p>
+                    </div>
+                    <div class="pain-point-item">
+                        <div class="icon-wrapper"><i class="fa-solid fa-users-gear text-gold"></i></div>
+                        <h3>地主整合難</h3>
+                        <p>坪數分配不均、少數地主反對，缺乏公正第三方協調。</p>
+                    </div>
+                    <div class="pain-point-item">
+                        <div class="icon-wrapper"><i class="fa-solid fa-trowel-bricks text-gold"></i></div>
+                        <h3>營造發包難</h3>
+                        <p>近年缺工缺料、造價飆漲，中小型案場常找不到優良營造廠。</p>
+                    </div>
+                </div>
+
+                <div class="welcome-actions">
+                    <button id="btn-start" class="btn btn-primary btn-lg">
+                        <span>開始卡關診斷與評估</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 表單區 (多步驟表單) -->
+        <section id="section-form" class="card">
+            <!-- 步驟指示器 -->
+            <div class="step-indicator">
+                <div class="step active" data-step="1">
+                    <div class="step-num">1</div>
+                    <div class="step-label">基地與進度</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-num">2</div>
+                    <div class="step-label">卡關自我診斷</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-num">3</div>
+                    <div class="step-label">財務概算參數</div>
+                </div>
+            </div>
+
+            <form id="assessment-form">
+                <!-- Step 1: 基地與進度 -->
+                <div class="form-step-panel active" data-panel="1">
+                    <h2><i class="fa-solid fa-map-location-dot text-gold header-icon"></i> 步驟 1：基地基本資料與目前進度</h2>
+                    <p class="panel-desc">請填寫基地的基本參數，這將協助我們進行容積與造價的初步估算。</p>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="input-location">基地座落區域</label>
+                            <select id="input-location" class="form-control">
+                                <option value="taipei">台北市</option>
+                                <option value="new_taipei">新北市</option>
+                                <option value="taichung">台中市</option>
+                                <option value="others" selected>其他縣市</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-area">基地面積 (坪)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-area" class="form-control" placeholder="例如: 100" min="10" required value="100">
+                                <span class="unit">坪</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-zone-type">土地使用分區 (預設容積率)</label>
+                            <select id="input-zone-type" class="form-control">
+                                <option value="225">住二 (容積率 225%)</option>
+                                <option value="240">三低/住三 (容積率 240%)</option>
+                                <option value="300" selected>住三 (容積率 300%)</option>
+                                <option value="400">商一/住四 (容積率 400%)</option>
+                                <option value="560">商二 (容積率 560%)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-incentive">預估容積獎勵比例 (%)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-incentive" class="form-control" placeholder="例如: 30" min="0" max="40" value="30">
+                                <span class="unit">%</span>
+                            </div>
+                            <span class="form-help">危老上限為 40% (含時程與基地規模獎勵)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-landowners">地主總戶數 (所有權人人數)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-landowners" class="form-control" placeholder="例如: 10" min="1" required value="10">
+                                <span class="unit">戶</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-progress">目前重建進度階段</label>
+                            <select id="input-progress" class="form-control">
+                                <option value="init">初期籌備 (地主剛發起)</option>
+                                <option value="planning" selected>規劃中 (已在擬定重建計畫)</option>
+                                <option value="approved">已核准 (重建計畫已通過，未取得建照)</option>
+                                <option value="licensed">已取得建照 (尚未發包或籌資中)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn btn-secondary btn-prev" disabled>上一步</button>
+                        <button type="button" class="btn btn-primary btn-next">下一步 <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 2: 卡關自我診斷 -->
+                <div class="form-step-panel" data-panel="2">
+                    <h2><i class="fa-solid fa-heart-crack text-gold header-icon"></i> 步驟 2：核心卡關障礙評估 (1-5 分)</h2>
+                    <p class="panel-desc">請誠實評估您目前面臨的卡關狀況。1 分表示毫無阻礙，5 分表示極度嚴重且無法進展。</p>
+                    
+                    <div class="slider-group-container">
+                        <!-- 1. 資金籌措 -->
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <h3>1. 資金與融資困境</h3>
+                                <span class="slider-value" id="val-capital">3</span>
+                            </div>
+                            <p class="slider-desc">地主無力籌措前期規劃費、銀行融資成數過低、找不到續建保證或建經公司信託。</p>
+                            <div class="slider-control">
+                                <span class="slider-label">無阻礙</span>
+                                <input type="range" id="score-capital" min="1" max="5" value="3" class="custom-slider">
+                                <span class="slider-label">極嚴重</span>
+                            </div>
+                        </div>
+
+                        <!-- 2. 地主整合 -->
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <h3>2. 地主意向與整合爭議</h3>
+                                <span class="slider-value" id="val-integration">3</span>
+                            </div>
+                            <p class="slider-desc">地主對分配比例有爭議（例如一樓、頂樓與中高樓層分配不均）、少數地主堅持反對或失聯。</p>
+                            <div class="slider-control">
+                                <span class="slider-label">無阻礙</span>
+                                <input type="range" id="score-integration" min="1" max="5" value="3" class="custom-slider">
+                                <span class="slider-label">極嚴重</span>
+                            </div>
+                        </div>
+
+                        <!-- 3. 營造成本 -->
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <h3>3. 營造成本暴漲與發包困境</h3>
+                                <span class="slider-value" id="val-construction">3</span>
+                            </div>
+                            <p class="slider-desc">營造報價遠超地主預期、找不到願意承接中小型危老案的優質營造廠、合約條款有潛在糾紛風險。</p>
+                            <div class="slider-control">
+                                <span class="slider-label">無阻礙</span>
+                                <input type="range" id="score-construction" min="1" max="5" value="3" class="custom-slider">
+                                <span class="slider-label">極嚴重</span>
+                            </div>
+                        </div>
+
+                        <!-- 4. 專業知識與管理 -->
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <h3>4. 專業知識匱乏與全案管理不足</h3>
+                                <span class="slider-value" id="val-professional">3</span>
+                            </div>
+                            <p class="slider-desc">地主不懂建築法規、營建合約、無專業 PCM (全案管理) 公司輔導，全由熱心地主兼職處理，精疲力竭。</p>
+                            <div class="slider-control">
+                                <span class="slider-label">無阻礙</span>
+                                <input type="range" id="score-professional" min="1" max="5" value="3" class="custom-slider">
+                                <span class="slider-label">極嚴重</span>
+                            </div>
+                        </div>
+
+                        <!-- 5. 法規與基地限制 -->
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <h3>5. 法規與基地條件限制</h3>
+                                <span class="slider-value" id="val-regulation">3</span>
+                            </div>
+                            <p class="slider-desc">基地形狀畸零、需與鄰地合併但談判破局、時程獎勵遞減、私設通路或消防空間不足等法規障礙。</p>
+                            <div class="slider-control">
+                                <span class="slider-label">無阻礙</span>
+                                <input type="range" id="score-regulation" min="1" max="5" value="3" class="custom-slider">
+                                <span class="slider-label">極嚴重</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn btn-secondary btn-prev">上一步</button>
+                        <button type="button" class="btn btn-primary btn-next">下一步 <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 3: 財務概算參數 -->
+                <div class="form-step-panel" data-panel="3">
+                    <h2><i class="fa-solid fa-calculator text-gold header-icon"></i> 步驟 3：自建財務試算基本參數</h2>
+                    <p class="panel-desc">請輸入目前掌握或預估的造價與資金分配參數，系統將為您估算財務可行性與缺口。</p>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="input-build-cost">預估營造單價 (萬/坪)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-build-cost" class="form-control" placeholder="例如: 25" min="15" max="50" value="25" required>
+                                <span class="unit">萬元/坪</span>
+                            </div>
+                            <span class="form-help">目前台北市電梯大樓造價普遍約 22~30萬/坪，新北約 20~26萬/坪</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-other-cost-ratio">規劃、信託與行政管理規費 (%)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-other-cost-ratio" class="form-control" placeholder="例如: 12" min="5" max="25" value="12" required>
+                                <span class="unit">%</span>
+                            </div>
+                            <span class="form-help">包含設計費、監造費、建經與信託費、稅金等，一般約佔營造成本的 10~15%</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-finance-rate">預估銀行融資年利率 (%)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-finance-rate" class="form-control" placeholder="例如: 3.0" step="0.1" min="1.5" max="6.0" value="3.0" required>
+                                <span class="unit">%</span>
+                            </div>
+                            <span class="form-help">目前土建融重建融資利率約落在 2.8% ~ 3.5% 之間</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-construction-years">預估開發與施工期 (年)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-construction-years" class="form-control" placeholder="例如: 4" min="2" max="7" value="4" required>
+                                <span class="unit">年</span>
+                            </div>
+                            <span class="form-help">含前期規劃、申請建照、拆除與興建，一般為 3~5 年</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-self-ratio">地主預計期初自籌款比例 (%)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-self-ratio" class="form-control" placeholder="例如: 20" min="0" max="100" value="20" required>
+                                <span class="unit">%</span>
+                            </div>
+                            <span class="form-help">非融資之資金，用以支付銀行動撥前之設計費、送件規費等，通常需 15~30%</span>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn btn-secondary btn-prev">上一步</button>
+                        <button type="submit" class="btn btn-success btn-submit">
+                            <span>送出診斷並產生報告</span>
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- 3. 診斷報告與建議儀表板 (Dashboard) -->
+        <section id="section-report" class="card">
+            <div class="report-header">
+                <div class="report-title-group">
+                    <div class="badge badge-success">評估完成</div>
+                    <h2>地主自建卡關診斷報告與調整建議</h2>
+                    <p class="text-muted">本報告為初步策略建議，旨在提供地主重啟談判或調整方向之參考。</p>
+                </div>
+                <div class="report-actions no-print">
+                    <button id="btn-print" class="btn btn-outline"><i class="fa-solid fa-print"></i> 列印報告</button>
+                    <button id="btn-reassess" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> 重新評估</button>
+                </div>
+            </div>
+
+            <!-- 報告總覽與雷達圖區 -->
+            <div class="report-overview-grid">
+                <!-- 左側：卡關指數與文字總評 -->
+                <div class="overview-info-card">
+                    <div class="risk-gauge-container">
+                        <div class="risk-gauge-circle">
+                            <div class="gauge-value" id="gauge-score">0%</div>
+                            <div class="gauge-label">卡關危險指數</div>
+                        </div>
+                    </div>
+                    <div class="risk-status-text">
+                        <h3 id="risk-title">系統診斷中...</h3>
+                        <p id="risk-summary">正在分析您的危老重建案卡關情況，請稍候...</p>
+                    </div>
+                </div>
+
+                <!-- 右側：SVG 雷達圖 -->
+                <div class="overview-chart-card">
+                    <h3>五大卡關面向雷達圖</h3>
+                    <div class="radar-chart-container">
+                        <svg id="radar-chart" viewBox="0 0 400 400" width="100%" height="100%">
+                            <!-- 將由 JS 動態繪製網格與數據多邊形 -->
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 財務與重建試算結果 -->
+            <div class="report-sub-section">
+                <h3 class="section-title"><i class="fa-solid fa-money-bill-trend-up text-gold"></i> 重建財務與規模概算</h3>
+                <div class="finance-cards-grid">
+                    <div class="finance-card">
+                        <span class="card-label">基準容積坪數</span>
+                        <span class="card-num" id="calc-base-floor">0</span>
+                        <span class="card-unit">坪</span>
+                    </div>
+                    <div class="finance-card">
+                        <span class="card-label">預估重建總建坪 <i class="fa-solid fa-circle-info tooltip-trigger" title="含容積獎勵與公設，約為基準容積的1.6倍乘上(1+容獎)"></i></span>
+                        <span class="card-num text-gold" id="calc-total-floor">0</span>
+                        <span class="card-unit">坪</span>
+                    </div>
+                    <div class="finance-card">
+                        <span class="card-label">預估重建總造價 <i class="fa-solid fa-circle-info tooltip-trigger" title="含營造成本、規劃管理費與開發期融資利息"></i></span>
+                        <span class="card-num" id="calc-total-cost">0</span>
+                        <span class="card-unit">萬元</span>
+                    </div>
+                    <div class="finance-card">
+                        <span class="card-label">戶均需籌措資金 <i class="fa-solid fa-circle-info tooltip-trigger" title="總造價除以地主戶數，實際分配需依地主持分比例計算"></i></span>
+                        <span class="card-num text-gold" id="calc-avg-cost">0</span>
+                        <span class="card-unit">萬/戶</span>
+                    </div>
+                </div>
+
+                <!-- 財務明細折疊 -->
+                <div class="details-accordion">
+                    <details>
+                        <summary>檢視詳細財務與容積估算明細</summary>
+                        <div class="details-content">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>項目</th>
+                                        <th>數值/比例</th>
+                                        <th>預估金額 (新台幣)</th>
+                                        <th>備註</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>基準坪數 (土地面積 × 預設容積率)</td>
+                                        <td id="row-base-floor-val">300 坪</td>
+                                        <td>-</td>
+                                        <td>依土地分區計算</td>
+                                    </tr>
+                                    <tr>
+                                        <td>免計容積與公設坪 (約 1.6 倍銷坪係數)</td>
+                                        <td id="row-free-floor-val">180 坪</td>
+                                        <td>-</td>
+                                        <td>含梯廳、陽台、機房等基本公設</td>
+                                    </tr>
+                                    <tr>
+                                        <td>容積獎勵增坪</td>
+                                        <td id="row-bonus-floor-val">90 坪</td>
+                                        <td>-</td>
+                                        <td id="row-bonus-desc">容積獎勵 30%</td>
+                                    </tr>
+                                    <tr class="table-divider">
+                                        <td><strong>預估總興建面積 (銷坪)</strong></td>
+                                        <td id="row-total-floor-val"><strong>570 坪</strong></td>
+                                        <td>-</td>
+                                        <td><strong>更新後可登記之總面積</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>純營造費用 (營建主體)</td>
+                                        <td id="row-build-cost-unit">25 萬/坪</td>
+                                        <td id="row-build-cost-total">0 萬元</td>
+                                        <td>直接工程款</td>
+                                    </tr>
+                                    <tr>
+                                        <td>設計規劃與行政規費</td>
+                                        <td id="row-admin-cost-ratio">12%</td>
+                                        <td id="row-admin-cost-total">0 萬元</td>
+                                        <td>建築師、估價師、信託建經規費等</td>
+                                    </tr>
+                                    <tr>
+                                        <td>開發期間融資利息</td>
+                                        <td id="row-interest-rate-val">3.0%</td>
+                                        <td id="row-interest-total">0 萬元</td>
+                                        <td>以融資金額 80% 於施工期折半計息</td>
+                                    </tr>
+                                    <tr class="table-highlight">
+                                        <td><strong>重建總成本 (總造價)</strong></td>
+                                        <td><strong>100%</strong></td>
+                                        <td id="row-total-cost-total"><strong>0 萬元</strong></td>
+                                        <td><strong>地主自建所需募集的總資金</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>期初地主自籌款總額</td>
+                                        <td id="row-self-ratio-val">20%</td>
+                                        <td id="row-self-total">0 萬元</td>
+                                        <td>開工前需分期到位之資金</td>
+                                    </tr>
+                                    <tr>
+                                        <td>銀行融資總額 (土建融)</td>
+                                        <td id="row-finance-ratio-val">80%</td>
+                                        <td id="row-finance-total">0 萬元</td>
+                                        <td>由信託專戶控管，依工程進度動撥</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- 卡關分析與核心建議對策 -->
+            <div class="report-sub-section">
+                <h3 class="section-title"><i class="fa-solid fa-compass text-gold"></i> 核心卡關分析與調整對策</h3>
+                <div id="strategies-container" class="strategies-grid">
+                    <!-- JS 將根據最高分的項目，生成卡關診斷與對策卡片 -->
+                </div>
+            </div>
+
+            <!-- 財務壓力測試分析 -->
+            <div class="report-sub-section">
+                <h3 class="section-title"><i class="fa-solid fa-triangle-exclamation text-gold"></i> 營造成本上漲之財務壓力測試 (敏感度分析)</h3>
+                <p class="section-desc">近年營建市場造價波動劇烈，以下為您模擬當「純營造費用」上漲 10%、20%、30% 時，對總造價及地主戶均自籌資金的衝擊程度，以提前做好資金避險準備。</p>
+                <div class="table-responsive">
+                    <table class="data-table test-table" id="pressure-test-table">
+                        <thead>
+                            <tr>
+                                <th>營造成本變動</th>
+                                <th>每坪純營造單價</th>
+                                <th>預估重建總成本</th>
+                                <th>總成本增加額</th>
+                                <th>地主戶均需多負擔</th>
+                                <th>建議防範對策</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 由 JS 動態生成數據 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 行動指南 (Action Plan) -->
+            <div class="report-sub-section">
+                <h3 class="section-title"><i class="fa-solid fa-list-check text-gold"></i> 地主自建下一步行動指南 (Action Plan)</h3>
+                <p class="section-desc">根據您的診斷結果，建議推動委員會或發起人優先執行以下步驟以突破僵局：</p>
+                <div class="action-plan-list" id="action-plan-container">
+                    <!-- JS 將生成帶有 checkbox 的步驟清單 -->
+                </div>
+            </div>
+
+            <!-- 地主選配衝突與找補試算器 -->
+            <div class="report-sub-section">
+                <h3 class="section-title"><i class="fa-solid fa-people-arrows text-gold"></i> 地主選配衝突與找補試算器 (實務協商模組)</h3>
+                <p class="section-desc">當多位地主同時爭取同一精華戶（如 10 樓）且卡關時，此工具透過實務上的「內部溢價競標」或「樓層退讓差額補償」模式，協助地主算出客觀的找補與補償金額，快速化解僵局。</p>
+                
+                <div class="conflict-solver-grid">
+                    <!-- 輸入控制面板 -->
+                    <div class="solver-input-card">
+                        <h4><i class="fa-solid fa-sliders text-gold"></i> 協商參數設定</h4>
+                        
+                        <div class="solver-form-group">
+                            <label for="conflict-unit">爭議目標戶/樓層</label>
+                            <input type="text" id="conflict-unit" class="form-control" value="10樓全層 (精華戶)">
+                        </div>
+                        <div class="solver-form-group">
+                            <label for="conflict-value">目標戶官方估值 (萬元)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="conflict-value" class="form-control" value="3000" min="100">
+                                <span class="unit">萬元</span>
+                            </div>
+                        </div>
+                        
+                        <hr class="solver-divider">
+                        
+                        <!-- 地主 A 參數 -->
+                        <div class="landowner-input-block">
+                            <div class="landowner-title-input">
+                                <h5>地主甲：</h5>
+                                <input type="text" id="landowner-a-name" class="form-control form-control-inline" value="林美純">
+                            </div>
+                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">意願：想選滿 10 樓</p>
+                            <div class="solver-row">
+                                <div class="solver-col">
+                                    <label for="landowner-a-total">可分回總價值 (萬)</label>
+                                    <input type="number" id="landowner-a-total" class="form-control" value="4500">
+                                </div>
+                                <div class="solver-col">
+                                    <label for="landowner-a-bid">願意額外加價 (萬)</label>
+                                    <input type="number" id="landowner-a-bid" class="form-control" value="150" title="林美純願意為10樓加價的上限">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="solver-divider">
+
+                        <!-- 地主 B 參數 -->
+                        <div class="landowner-input-block">
+                            <div class="landowner-title-input">
+                                <h5>地主乙：</h5>
+                                <input type="text" id="landowner-b-name" class="form-control form-control-inline" value="陳政助">
+                            </div>
+                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">意願：自住10樓，賣出其餘</p>
+                            <div class="solver-row">
+                                <div class="solver-col">
+                                    <label for="landowner-b-total">可分回總價值 (萬)</label>
+                                    <input type="number" id="landowner-b-total" class="form-control" value="3500">
+                                </div>
+                                <div class="solver-col">
+                                    <label for="landowner-b-bid">願意額外加價 (萬)</label>
+                                    <input type="number" id="landowner-b-bid" class="form-control" value="200" title="陳政助願意為10樓加價的上限">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="solver-actions" style="margin-top: 1.5rem;">
+                            <button type="button" id="btn-solve-conflict" class="btn btn-primary" style="width: 100%;">
+                                <i class="fa-solid fa-gavel"></i> 開始衝突協商計算
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 計算輸出面板 -->
+                    <div class="solver-output-card">
+                        <h4><i class="fa-solid fa-square-poll-vertical text-gold"></i> 協商分析結果</h4>
+                        
+                        <!-- 競標判定 -->
+                        <div class="win-card" id="conflict-win-card">
+                            <div class="win-badge" id="conflict-winner-badge">判定得標者：陳政助</div>
+                            <p class="win-desc" id="conflict-win-desc">陳政助 願意加價 200 萬元，高於 林美純 的 150 萬元，成功選配 10 樓。</p>
+                        </div>
+
+                        <!-- 財務分配卡片 -->
+                        <div class="solver-result-details">
+                            <div class="result-col-wrapper">
+                                <div class="result-col-box">
+                                    <h5 id="winner-result-title">陳政助 (得標者)</h5>
+                                    <ul class="result-list">
+                                        <li>選配房屋：<strong id="win-unit-name">10樓全層</strong></li>
+                                        <li>取得代價：<span id="win-total-cost">3,200</span> 萬 <span class="text-muted" id="win-cost-formula">(官方估價 + 溢價)</span></li>
+                                        <li>應付林美純補償：<span class="text-danger" id="win-premium-pay">200</span> 萬元</li>
+                                        <li>剩餘可變現價值：<span id="win-remain-val">300</span> 萬 <span class="text-muted">(可選配他戶或賣出)</span></li>
+                                    </ul>
+                                </div>
+                                <div class="result-col-box">
+                                    <h5 id="loser-result-title">林美純 (退讓者)</h5>
+                                    <ul class="result-list">
+                                        <li>退讓選配：<strong id="lose-unit-name">9樓次佳戶 (官方價 2,850 萬)</strong></li>
+                                        <li>獲得溢價補償：<span class="text-success" id="lose-premium-get">200</span> 萬元 <span class="text-success">(免稅)</span></li>
+                                        <li>林美純實際總值：<span id="lose-actual-val">3,050</span> 萬元 <span class="text-muted">(新屋 + 補償)</span></li>
+                                        <li>剩餘可選配價值：<span id="lose-remain-val">1,450</span> 萬元 <span class="text-muted">(可再選配他戶)</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 協商協議大綱 -->
+                        <div class="mou-card">
+                            <h5><i class="fa-solid fa-file-contract text-gold"></i> 地主選配妥協協議書 (MOU) 草案</h5>
+                            <div class="mou-content-wrapper">
+                                <pre id="conflict-mou-text">載入中...</pre>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; margin-top: 0.75rem;">
+                                <button type="button" id="btn-copy-mou" class="btn btn-secondary btn-sm"><i class="fa-solid fa-copy"></i> 複製協議書</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-footer no-print">
+                <div class="alert-box">
+                    <i class="fa-solid fa-circle-info alert-icon"></i>
+                    <div class="alert-content">
+                        <strong>免責聲明：</strong>
+                        本工具提供之財務預估、容積計算與卡關建議均為初步概算模型，僅供地主自建初期內部討論之參考。實際重建計畫、容積獎勵、融資條件與營造合約，需由建築師、估價師、信託銀行、建經公司及承攬營造廠出具之正式報告與合約為準。
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer no-print">
+        <p>© 2026 危老重建「地主自建」卡關評估與調整建議系統. All Rights Reserved.</p>
+        <p class="footer-note">專為缺乏建商背景、自主發起重建之老舊公寓地主設計。</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
