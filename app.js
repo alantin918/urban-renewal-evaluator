@@ -805,29 +805,92 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalB = parseFloat(document.getElementById('landowner-b-total').value) || 0;
         const bidB = parseFloat(document.getElementById('landowner-b-bid').value) || 0;
 
-        let winnerName, winnerBid, winnerTotal;
-        let loserName, loserBid, loserTotal;
-        let isDraw = false;
+        const winnerBadge = document.getElementById('conflict-winner-badge');
+        const winDesc = document.getElementById('conflict-win-desc');
+        const winCard = document.getElementById('conflict-win-card');
 
-        // 2. 判定得標者 (出價高者得，平手時總價值高者得)
-        if (bidB > bidA) {
-            winnerName = nameB;
-            winnerBid = bidB;
-            winnerTotal = totalB;
-            loserName = nameA;
-            loserBid = bidA;
-            loserTotal = totalA;
-        } else if (bidA > bidB) {
-            winnerName = nameA;
-            winnerBid = bidA;
-            winnerTotal = totalA;
-            loserName = nameB;
-            loserBid = bidB;
-            loserTotal = totalB;
+        // 偵測是否為 3 戶拆分規劃
+        if (conflictUnit.includes('3戶') || conflictUnit.includes('三戶')) {
+            // === 方案 C: 戶別拆分選配協商 ===
+            const unitValue = Math.round(conflictValue / 3); // 單戶價值 (預設 1000萬)
+            
+            // 陳政助 (地主B) 選 A 戶自住 (消耗 1 戶價值)
+            const winnerCost = unitValue;
+            const winnerPayToLoser = 0; // 平分免補償
+            const winnerRemain = totalB - unitValue;
+
+            // 林美純 (地主A) 選 B, C 戶 (消耗 2 戶價值)
+            const loserUnitCost = unitValue * 2;
+            const loserActualTotal = unitValue * 2;
+            const loserRemain = totalA - (unitValue * 2);
+
+            // 更新 UI 狀態為和平解決 (綠色)
+            winnerBadge.textContent = `最佳推薦妥協方案：分拆選配 (和平解決)`;
+            winnerBadge.style.background = 'var(--color-success)';
+            winnerBadge.style.boxShadow = '0 0 10px var(--color-success-glow)';
+            
+            winDesc.innerHTML = `由於 10 樓規劃為 3 戶 (A、B、C 戶，每戶官方估值約 <strong>${unitValue.toLocaleString()} 萬元</strong>)。<strong>${nameB} (陳政助)</strong> 僅需自住，建議選配 10 樓 A 戶；<strong>${nameA} (林美純)</strong> 則選配另 2 戶。雙方在 10 樓和平共存，無選配衝突，故無需支付加價補償金。`;
+
+            // 更新結果卡片
+            document.getElementById('winner-result-title').textContent = `${nameB} (選配 10 樓 A 戶)`;
+            document.getElementById('win-unit-name').textContent = '10樓 A 戶 (自住)';
+            document.getElementById('win-total-cost').textContent = winnerCost.toLocaleString();
+            document.getElementById('win-premium-pay').textContent = winnerPayToLoser.toLocaleString();
+            document.getElementById('win-remain-val').textContent = winnerRemain.toLocaleString();
+
+            document.getElementById('loser-result-title').textContent = `${nameA} (選配 10 樓 B、C 戶)`;
+            document.getElementById('lose-unit-name').textContent = '10樓 B、C 戶 (共2戶)';
+            document.getElementById('lose-premium-get').textContent = winnerPayToLoser.toLocaleString();
+            document.getElementById('lose-actual-val').textContent = loserActualTotal.toLocaleString();
+            document.getElementById('lose-remain-val').textContent = loserRemain.toLocaleString();
+
+            // 生成拆分選配 MOU
+            const mouText = `都市更新/危老重建 地主選配讓步與戶別分拆協議書 (草案)
+
+立協議書人：
+甲方：${nameA}
+乙方：${nameB}
+
+緣甲、乙雙方同為本都市更新/危老重建計畫之全體土地所有權人，因重建後新建物「${conflictUnit}」（下稱目標樓層，官方總估定價值 ${conflictValue} 萬元，每戶平均價值 ${unitValue} 萬元）發生選配重疊衝突。為求全體地主利益一致，促成重建計畫順利推動，經雙方善意協商，達成以下選配讓步與拆分協議：
+
+一、目標樓層選配拆分：
+    雙方同意將目標樓層 (10樓) 進行拆分選配：
+    1. 乙方【${nameB}】選配 10 樓 A 戶 (價值 ${unitValue} 萬元) 用於自住。
+    2. 甲方【${nameA}】選配 10 樓 B 戶與 C 戶 (共計價值 ${unitValue * 2} 萬元)。
+
+二、溢價與補償免除：
+    因採分戶選配解決，雙方於目標樓層皆有分回，且皆大歡喜，故乙方無須支付甲方任何加價補償金。
+
+三、剩餘可用價值與配戶：
+    選配後雙方剩餘之更新前權利價值（甲方剩餘可用權值 ${loserRemain} 萬元、乙方剩餘可用權值 ${winnerRemain} 萬元），得依本重建計畫之選配規約，於中低樓層（如 4 樓、2 樓空戶）選配其餘房屋、車位、店面，或於完工交屋時辦理差額找補折現。其中乙方原規劃賣出之部分，改至中低樓層進行選配，以利銷售變現。
+
+四、本協議草案僅供協商使用，雙方於正式都更契約與信託契約簽署後，本協議即作為其附件並同時生效。
+
+協議書立人簽署：
+甲方：                        （簽名蓋章）
+乙方：                        （簽名蓋章）
+中華民國 年 月 日`;
+
+            document.getElementById('conflict-mou-text').textContent = mouText;
+
         } else {
-            // 平手，判定為總價值高者
-            isDraw = true;
-            if (totalA >= totalB) {
+            // === 方案 A/B: 內部溢價競標補償模式 ===
+            winnerBadge.style.background = 'var(--color-gold)';
+            winnerBadge.style.boxShadow = '0 0 10px var(--color-gold-glow)';
+
+            let winnerName, winnerBid, winnerTotal;
+            let loserName, loserBid, loserTotal;
+            let isDraw = false;
+
+            // 判定得標者 (出價高者得，平手時總價值高者得)
+            if (bidB > bidA) {
+                winnerName = nameB;
+                winnerBid = bidB;
+                winnerTotal = totalB;
+                loserName = nameA;
+                loserBid = bidA;
+                loserTotal = totalA;
+            } else if (bidA > bidB) {
                 winnerName = nameA;
                 winnerBid = bidA;
                 winnerTotal = totalA;
@@ -835,59 +898,57 @@ document.addEventListener('DOMContentLoaded', () => {
                 loserBid = bidB;
                 loserTotal = totalB;
             } else {
-                winnerName = nameB;
-                winnerBid = bidB;
-                winnerTotal = totalB;
-                loserName = nameA;
-                loserBid = bidA;
-                loserTotal = totalA;
+                isDraw = true;
+                if (totalA >= totalB) {
+                    winnerName = nameA;
+                    winnerBid = bidA;
+                    winnerTotal = totalA;
+                    loserName = nameB;
+                    loserBid = bidB;
+                    loserTotal = totalB;
+                } else {
+                    winnerName = nameB;
+                    winnerBid = bidB;
+                    winnerTotal = totalB;
+                    loserName = nameA;
+                    loserBid = bidA;
+                    loserTotal = totalA;
+                }
             }
-        }
 
-        // 3. 財務數據計算
-        // 得標者總取得代價 = 官方核估值 + 溢價
-        const winnerCost = conflictValue + winnerBid;
-        // 應付退讓者的補償金 = 得標者溢價
-        const winnerPayToLoser = winnerBid;
-        // 得標者消耗官方權利價值為 conflictValue (溢價是以現金補償，不佔都更權值分配)
-        const winnerRemain = winnerTotal - conflictValue;
+            // 財務數據計算 (退讓至中低樓層如4樓，官方估價以 90% 計算)
+            const winnerCost = conflictValue + winnerBid;
+            const winnerPayToLoser = winnerBid;
+            const winnerRemain = winnerTotal - conflictValue;
 
-        // 退讓者退選至次佳樓層 (估價為官方原估價之 95%)
-        const loserUnitCost = Math.round(conflictValue * 0.95);
-        // 退讓者實際總價值 = 次佳樓層價值 + 獲得之現金補償
-        const loserActualTotal = loserUnitCost + winnerPayToLoser;
-        // 退讓者剩餘可用都更權利價值 = 原分回總價值 - 次佳樓層價值
-        const loserRemain = loserTotal - loserUnitCost;
+            const loserUnitCost = Math.round(conflictValue * 0.90); 
+            const loserActualTotal = loserUnitCost + winnerPayToLoser;
+            const loserRemain = loserTotal - loserUnitCost;
 
-        // 4. 更新 UI 結果卡片
-        const winnerBadge = document.getElementById('conflict-winner-badge');
-        const winDesc = document.getElementById('conflict-win-desc');
-        const winCard = document.getElementById('conflict-win-card');
+            winnerBadge.textContent = `判定得標者：${winnerName}`;
+            
+            if (isDraw) {
+                winDesc.innerHTML = `雙方出價皆為 <strong>${winnerBid} 萬元</strong> 平手。<br>經系統以「更新前可分回總價值較高者優先選配」之實務標準，判定由 <strong>${winnerName}</strong> 取得 ${conflictUnit}。`;
+            } else {
+                winDesc.innerHTML = `<strong>${winnerName}</strong> 願意加價 <strong>${winnerBid} 萬元</strong>，高於 <strong>${loserName}</strong> 的 <strong>${loserBid} 萬元</strong>，成功選配 ${conflictUnit}。其加價金額將直接做為現金補償直接支付給 ${loserName}。`;
+            }
 
-        winnerBadge.textContent = `判定選配者：${winnerName}`;
-        
-        if (isDraw) {
-            winDesc.innerHTML = `雙方出價皆為 <strong>${winnerBid} 萬元</strong> 平手。<br>經系統以「更新前可分回總價值較高者優先選配」之實務標準，判定由 <strong>${winnerName}</strong> 取得 ${conflictUnit}。`;
-        } else {
-            winDesc.innerHTML = `<strong>${winnerName}</strong> 願意加價 <strong>${winnerBid} 萬元</strong>，高於 <strong>${loserName}</strong> 的 <strong>${loserBid} 萬元</strong>，成功選配 ${conflictUnit}。其加價金額將直接做為現金補償直接支付給 ${loserName}。`;
-        }
+            // 得標者卡片
+            document.getElementById('winner-result-title').textContent = `${winnerName} (選配得標)`;
+            document.getElementById('win-unit-name').textContent = conflictUnit;
+            document.getElementById('win-total-cost').textContent = winnerCost.toLocaleString();
+            document.getElementById('win-premium-pay').textContent = winnerPayToLoser.toLocaleString();
+            document.getElementById('win-remain-val').textContent = winnerRemain.toLocaleString();
 
-        // 得標者卡片
-        document.getElementById('winner-result-title').textContent = `${winnerName} (選配得標)`;
-        document.getElementById('win-unit-name').textContent = conflictUnit;
-        document.getElementById('win-total-cost').textContent = winnerCost.toLocaleString();
-        document.getElementById('win-premium-pay').textContent = winnerPayToLoser.toLocaleString();
-        document.getElementById('win-remain-val').textContent = winnerRemain.toLocaleString();
+            // 退讓者卡片
+            document.getElementById('loser-result-title').textContent = `${loserName} (協商退讓)`;
+            document.getElementById('lose-unit-name').textContent = `中低樓層 (官方價 ${loserUnitCost.toLocaleString()} 萬)`;
+            document.getElementById('lose-premium-get').textContent = winnerPayToLoser.toLocaleString();
+            document.getElementById('lose-actual-val').textContent = loserActualTotal.toLocaleString();
+            document.getElementById('lose-remain-val').textContent = loserRemain.toLocaleString();
 
-        // 退讓者卡片
-        document.getElementById('loser-result-title').textContent = `${loserName} (協商退讓)`;
-        document.getElementById('lose-unit-name').textContent = `次佳樓層 (官方價 ${loserUnitCost.toLocaleString()} 萬)`;
-        document.getElementById('lose-premium-get').textContent = winnerPayToLoser.toLocaleString();
-        document.getElementById('lose-actual-val').textContent = loserActualTotal.toLocaleString();
-        document.getElementById('lose-remain-val').textContent = loserRemain.toLocaleString();
-
-        // 5. 生成 MOU 協議書草案
-        const mouText = `都市更新/危老重建 地主選配讓步與溢價補償協議書 (草案)
+            // 生成競標找補 MOU
+            const mouText = `都市更新/危老重建 地主選配讓步與溢價補償協議書 (草案)
 
 立協議書人：
 甲方（退讓方）：${loserName}
@@ -899,7 +960,7 @@ document.addEventListener('DOMContentLoaded', () => {
     雙方同意目標戶由乙方【${winnerName}】選配取得。
 
 二、樓層讓步：
-    甲方【${loserName}】同意退讓，改為選配次佳樓層（官方估定價值 ${loserUnitCost} 萬元）。
+    甲方【${loserName}】同意退讓，改為選配中低樓層（官方估定價值 ${loserUnitCost} 萬元）。
 
 三、溢價補償約定：
     乙方【${winnerName}】同意以現金額外加價新台幣【${winnerPayToLoser}】萬元整（下稱補償金），作為對甲方【${loserName}】退讓之補償。此補償金不計入都更重建之官方找補，屬雙方私下協議之特別補償。
@@ -917,7 +978,8 @@ document.addEventListener('DOMContentLoaded', () => {
 乙方（得標方）：                        （簽名蓋章）
 中華民國 年 月 日`;
 
-        document.getElementById('conflict-mou-text').textContent = mouText;
+            document.getElementById('conflict-mou-text').textContent = mouText;
+        }
     }
 
     // 啟動選配衝突協商試算器

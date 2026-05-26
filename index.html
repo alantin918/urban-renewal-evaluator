@@ -489,7 +489,7 @@
             <!-- 地主選配衝突與找補試算器 -->
             <div class="report-sub-section">
                 <h3 class="section-title"><i class="fa-solid fa-people-arrows text-gold"></i> 地主選配衝突與找補試算器 (實務協商模組)</h3>
-                <p class="section-desc">當多位地主同時爭取同一精華戶（如 10 樓）且卡關時，此工具透過實務上的「內部溢價競標」或「樓層退讓差額補償」模式，協助地主算出客觀的找補與補償金額，快速化解僵局。</p>
+                <p class="section-desc">當多位地主同時爭取同一精華樓層（目前建築師規劃為 10 樓共 3 戶）且卡關時，此工具透過實務上的「戶別分拆選配」或「內部加價競標補償」模式，協助地主算出客觀的找補與補償金額，快速化解僵局。</p>
                 
                 <div class="conflict-solver-grid">
                     <!-- 輸入控制面板 -->
@@ -498,10 +498,10 @@
                         
                         <div class="solver-form-group">
                             <label for="conflict-unit">爭議目標戶/樓層</label>
-                            <input type="text" id="conflict-unit" class="form-control" value="10樓全層 (精華戶)">
+                            <input type="text" id="conflict-unit" class="form-control" value="10樓 (規劃A、B、C共3戶)">
                         </div>
                         <div class="solver-form-group">
-                            <label for="conflict-value">目標戶官方估值 (萬元)</label>
+                            <label for="conflict-value">10樓官方總估值 (萬元)</label>
                             <div class="input-wrapper">
                                 <input type="number" id="conflict-value" class="form-control" value="3000" min="100">
                                 <span class="unit">萬元</span>
@@ -516,14 +516,14 @@
                                 <h5>地主甲：</h5>
                                 <input type="text" id="landowner-a-name" class="form-control form-control-inline" value="林美純">
                             </div>
-                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">意願：想選滿 10 樓</p>
+                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">原意願：想選滿 10 樓 (共 3 戶)</p>
                             <div class="solver-row">
                                 <div class="solver-col">
                                     <label for="landowner-a-total">可分回總價值 (萬)</label>
                                     <input type="number" id="landowner-a-total" class="form-control" value="4500">
                                 </div>
                                 <div class="solver-col">
-                                    <label for="landowner-a-bid">願意額外加價 (萬)</label>
+                                    <label for="landowner-a-bid">若競標願加價 (萬)</label>
                                     <input type="number" id="landowner-a-bid" class="form-control" value="150" title="林美純願意為10樓加價的上限">
                                 </div>
                             </div>
@@ -537,14 +537,14 @@
                                 <h5>地主乙：</h5>
                                 <input type="text" id="landowner-b-name" class="form-control form-control-inline" value="陳政助">
                             </div>
-                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">意願：自住10樓，賣出其餘</p>
+                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">原意願：自住10樓，賣出其餘</p>
                             <div class="solver-row">
                                 <div class="solver-col">
                                     <label for="landowner-b-total">可分回總價值 (萬)</label>
                                     <input type="number" id="landowner-b-total" class="form-control" value="3500">
                                 </div>
                                 <div class="solver-col">
-                                    <label for="landowner-b-bid">願意額外加價 (萬)</label>
+                                    <label for="landowner-b-bid">若競標願加價 (萬)</label>
                                     <input type="number" id="landowner-b-bid" class="form-control" value="200" title="陳政助願意為10樓加價的上限">
                                 </div>
                             </div>
@@ -563,8 +563,8 @@
                         
                         <!-- 競標判定 -->
                         <div class="win-card" id="conflict-win-card">
-                            <div class="win-badge" id="conflict-winner-badge">判定得標者：陳政助</div>
-                            <p class="win-desc" id="conflict-win-desc">陳政助 願意加價 200 萬元，高於 林美純 的 150 萬元，成功選配 10 樓。</p>
+                            <div class="win-badge" id="conflict-winner-badge">最佳推薦妥協方案</div>
+                            <p class="win-desc" id="conflict-win-desc">系統判定中...</p>
                         </div>
 
                         <!-- 財務分配卡片 -->
@@ -573,19 +573,19 @@
                                 <div class="result-col-box">
                                     <h5 id="winner-result-title">陳政助 (得標者)</h5>
                                     <ul class="result-list">
-                                        <li>選配房屋：<strong id="win-unit-name">10樓全層</strong></li>
-                                        <li>取得代價：<span id="win-total-cost">3,200</span> 萬 <span class="text-muted" id="win-cost-formula">(官方估價 + 溢價)</span></li>
-                                        <li>應付林美純補償：<span class="text-danger" id="win-premium-pay">200</span> 萬元</li>
-                                        <li>剩餘可變現價值：<span id="win-remain-val">300</span> 萬 <span class="text-muted">(可選配他戶或賣出)</span></li>
+                                        <li>選配房屋：<strong id="win-unit-name">10樓A戶 (自住)</strong></li>
+                                        <li>取得代價：<span id="win-total-cost">1000</span> 萬 <span class="text-muted" id="win-cost-formula">(分拆選配，免溢價)</span></li>
+                                        <li>應付林美純補償：<span class="text-success" id="win-premium-pay">0</span> 萬元</li>
+                                        <li>剩餘可用權值：<span id="win-remain-val">2500</span> 萬 <span class="text-muted">(可去低樓層選配轉售)</span></li>
                                     </ul>
                                 </div>
                                 <div class="result-col-box">
                                     <h5 id="loser-result-title">林美純 (退讓者)</h5>
                                     <ul class="result-list">
-                                        <li>退讓選配：<strong id="lose-unit-name">9樓次佳戶 (官方價 2,850 萬)</strong></li>
-                                        <li>獲得溢價補償：<span class="text-success" id="lose-premium-get">200</span> 萬元 <span class="text-success">(免稅)</span></li>
-                                        <li>林美純實際總值：<span id="lose-actual-val">3,050</span> 萬元 <span class="text-muted">(新屋 + 補償)</span></li>
-                                        <li>剩餘可選配價值：<span id="lose-remain-val">1,450</span> 萬元 <span class="text-muted">(可再選配他戶)</span></li>
+                                        <li>妥協選配：<strong id="lose-unit-name">10樓B、C戶 (共2戶)</strong></li>
+                                        <li>獲得溢價補償：<span class="text-success" id="lose-premium-get">0</span> 萬元 <span class="text-muted">(無衝突免補償)</span></li>
+                                        <li>林美純實際總值：<span id="lose-actual-val">2000</span> 萬元 <span class="text-muted">(10樓兩戶官方估價)</span></li>
+                                        <li>剩餘可用權值：<span id="lose-remain-val">2500</span> 萬元 <span class="text-muted">(可再去低樓層選配)</span></li>
                                     </ul>
                                 </div>
                             </div>
