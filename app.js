@@ -955,6 +955,174 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('conflict-mou-text').textContent = mouText;
         }
+
+        // === 統一更新「圖解路徑 (Flow)」中的動態數據 ===
+        try {
+            // 方案 A 資料計算 (頂樓全拿與退讓補償)
+            const flowA_a10Area = 49;
+            const flowA_bDesiredArea = 22.67;
+            const flowA_a10Cost = Math.round(flowA_a10Area * p10Price); // 7377
+            const flowA_aRemain = totalA - flowA_a10Cost;
+            const flowA_b2Cost = Math.round(flowA_bDesiredArea * p2Price); // 3209
+            const flowA_bRemain = totalB - flowA_b2Cost;
+            
+            const flowA_p2OfficialTotal = flowA_bDesiredArea * p2Price;
+            const flowA_fairPremiumPay = Math.round(flowA_p2OfficialTotal * 0.08); // 257
+            const flowA_officialValueDiff = Math.round(flowA_bDesiredArea * (p10Price - p2Price)); // 204
+
+            // 更新 Scheme A UI
+            const flowA_ownerANameEl = document.getElementById('flow-a-owner-a-name');
+            if (flowA_ownerANameEl) flowA_ownerANameEl.textContent = `${nameA} (地主甲)`;
+            
+            const flowA_ownerADetailEl = document.getElementById('flow-a-owner-a-detail');
+            if (flowA_ownerADetailEl) {
+                const aRemainText = flowA_aRemain >= 0 ? `剩 ${flowA_aRemain.toLocaleString()} 萬權值` : `需找補 ${Math.abs(flowA_aRemain).toLocaleString()} 萬`;
+                flowA_ownerADetailEl.textContent = `取得 ${flowA_a10Area} 坪 • 消耗 ${flowA_a10Cost.toLocaleString()} 萬 • ${aRemainText}`;
+            }
+            
+            const flowA_flowLabelEl = document.getElementById('flow-a-flow-label');
+            if (flowA_flowLabelEl) {
+                flowA_flowLabelEl.innerHTML = `<i class="fa-solid fa-coins text-gold"></i> 支付現金補償 ${flowA_fairPremiumPay} 萬`;
+            }
+            
+            const flowA_ownerBNameEl = document.getElementById('flow-a-owner-b-name');
+            if (flowA_ownerBNameEl) flowA_ownerBNameEl.textContent = `${nameB} (地主乙)`;
+            
+            const flowA_ownerBDetailEl = document.getElementById('flow-a-owner-b-detail');
+            if (flowA_ownerBDetailEl) {
+                const bRemainText = flowA_bRemain >= 0 ? `剩 ${flowA_bRemain.toLocaleString()} 萬權值` : `需找補 ${Math.abs(flowA_bRemain).toLocaleString()} 萬`;
+                flowA_ownerBDetailEl.textContent = `取得 ${flowA_bDesiredArea} 坪 • 消耗 ${flowA_b2Cost.toLocaleString()} 萬 • ${bRemainText}`;
+            }
+            
+            const flowA_summaryDescEl = document.getElementById('flow-a-summary-desc');
+            if (flowA_summaryDescEl) {
+                flowA_summaryDescEl.textContent = `${nameA}享有整層大坪數空間，並用現金補償${nameB} ${flowA_fairPremiumPay} 萬元，彌補其退讓至 2 樓之市場抗性，${nameB}同時省下原本都更案中需付的找補款 ${flowA_officialValueDiff} 萬元，是實務最推薦雙贏解法。`;
+            }
+
+            // 方案 B 資料計算 (頂樓分拆選配)
+            const flowB_unitValue = Math.round(conflictValue / 3);
+            const flowB_aCost = flowB_unitValue * 2;
+            const flowB_aRemain = totalA - flowB_aCost;
+            const flowB_bCost = flowB_unitValue;
+            const flowB_bRemain = totalB - flowB_bCost;
+
+            // 更新 Scheme B UI
+            const flowB_ownerANameEl = document.getElementById('flow-b-owner-a-name');
+            if (flowB_ownerANameEl) flowB_ownerANameEl.textContent = `${nameA} (地主甲)`;
+            
+            const flowB_ownerADetailEl = document.getElementById('flow-b-owner-a-detail');
+            if (flowB_ownerADetailEl) {
+                const aRemainText = flowB_aRemain >= 0 ? `剩 ${flowB_aRemain.toLocaleString()} 萬` : `需找補 ${Math.abs(flowB_aRemain).toLocaleString()} 萬`;
+                flowB_ownerADetailEl.textContent = `取得 2 戶 • 消耗 ${flowB_aCost.toLocaleString()} 萬 • ${aRemainText}`;
+            }
+            
+            const flowB_ownerBNameEl = document.getElementById('flow-b-owner-b-name');
+            if (flowB_ownerBNameEl) flowB_ownerBNameEl.textContent = `${nameB} (地主乙)`;
+            
+            const flowB_ownerBDetailEl = document.getElementById('flow-b-owner-b-detail');
+            if (flowB_ownerBDetailEl) {
+                const bRemainText = flowB_bRemain >= 0 ? `剩 ${flowB_bRemain.toLocaleString()} 萬` : `需找補 ${Math.abs(flowB_bRemain).toLocaleString()} 萬`;
+                flowB_ownerBDetailEl.textContent = `取得 1 戶 • 消耗 ${flowB_bCost.toLocaleString()} 萬 • ${bRemainText}`;
+            }
+            
+            const flowB_summaryDescEl = document.getElementById('flow-b-summary-desc');
+            if (flowB_summaryDescEl) {
+                flowB_summaryDescEl.textContent = `雙方平分 ${conflictUnit} 戶別（${nameB} 1 戶，${nameA} 2 戶），在同樓層當鄰居，無需支付任何額外現金。但${nameA}無法打通，剩餘的 ${flowB_aRemain >= 0 ? flowB_aRemain.toLocaleString() : 0} 萬都更權值需分散選配低樓層。`;
+            }
+
+            // 方案 C 資料計算 (競標機制)
+            let flowC_winnerName, flowC_winnerBid, flowC_winnerTotal;
+            let flowC_loserName, flowC_loserBid, flowC_loserTotal;
+            let flowC_isDraw = false;
+
+            if (bidB > bidA) {
+                flowC_winnerName = nameB;
+                flowC_winnerBid = bidB;
+                flowC_winnerTotal = totalB;
+                flowC_loserName = nameA;
+                flowC_loserBid = bidA;
+                flowC_loserTotal = totalA;
+            } else if (bidA > bidB) {
+                flowC_winnerName = nameA;
+                flowC_winnerBid = bidA;
+                flowC_winnerTotal = totalA;
+                flowC_loserName = nameB;
+                flowC_loserBid = bidB;
+                flowC_loserTotal = totalB;
+            } else {
+                flowC_isDraw = true;
+                if (totalA >= totalB) {
+                    flowC_winnerName = nameA;
+                    flowC_winnerBid = bidA;
+                    flowC_winnerTotal = totalA;
+                    flowC_loserName = nameB;
+                    flowC_loserBid = bidB;
+                    flowC_loserTotal = totalB;
+                } else {
+                    flowC_winnerName = nameB;
+                    flowC_winnerBid = bidB;
+                    flowC_winnerTotal = totalB;
+                    flowC_loserName = nameA;
+                    flowC_loserBid = bidA;
+                    flowC_loserTotal = totalA;
+                }
+            }
+
+            const flowC_winnerCost = conflictValue + flowC_winnerBid;
+            const flowC_winnerRemain = flowC_winnerTotal - flowC_winnerCost;
+            const flowC_loserUnitCost = Math.round(conflictValue * 0.90);
+            const flowC_loserRemain = flowC_loserTotal - flowC_loserUnitCost;
+
+            // 更新 Scheme C UI
+            const flowC_winnerNameEl = document.getElementById('flow-c-winner-name');
+            if (flowC_winnerNameEl) {
+                flowC_winnerNameEl.textContent = `${flowC_winnerName} (${flowC_isDraw ? '平手判定得標' : '競價得標者'})`;
+            }
+            
+            const flowC_winnerUnitEl = document.getElementById('flow-c-winner-unit');
+            if (flowC_winnerUnitEl) {
+                flowC_winnerUnitEl.textContent = `${conflictUnit} (獨佔)`;
+            }
+
+            const flowC_winnerDetailEl = document.getElementById('flow-c-winner-detail');
+            if (flowC_winnerDetailEl) {
+                const winnerRemainText = flowC_winnerRemain >= 0 ? `剩 ${flowC_winnerRemain.toLocaleString()} 萬` : `需找補 ${Math.abs(flowC_winnerRemain).toLocaleString()} 萬`;
+                flowC_winnerDetailEl.textContent = `消耗 ${flowC_winnerCost.toLocaleString()} 萬 (官方 ${conflictValue.toLocaleString()} 萬 + 溢價 ${flowC_winnerBid.toLocaleString()} 萬) • ${winnerRemainText}`;
+            }
+
+            const flowC_flowLabelEl = document.getElementById('flow-c-flow-label');
+            if (flowC_flowLabelEl) {
+                flowC_flowLabelEl.innerHTML = `<i class="fa-solid fa-gavel text-gold"></i> 支付競標溢價金 ${flowC_winnerBid} 萬`;
+            }
+
+            const flowC_loserNameEl = document.getElementById('flow-c-loser-name');
+            if (flowC_loserNameEl) {
+                flowC_loserNameEl.textContent = `${flowC_loserName} (協商退讓者)`;
+            }
+
+            const flowC_loserUnitEl = document.getElementById('flow-c-loser-unit');
+            if (flowC_loserUnitEl) {
+                flowC_loserUnitEl.textContent = `中低樓層戶 (估約 ${flowC_loserUnitCost.toLocaleString()} 萬)`;
+            }
+
+            const flowC_loserDetailEl = document.getElementById('flow-c-loser-detail');
+            if (flowC_loserDetailEl) {
+                const loserRemainText = flowC_loserRemain >= 0 ? `剩 ${flowC_loserRemain.toLocaleString()} 萬` : `需找補 ${Math.abs(flowC_loserRemain).toLocaleString()} 萬`;
+                flowC_loserDetailEl.textContent = `獲補償金 ${flowC_winnerBid.toLocaleString()} 萬 • ${loserRemainText}`;
+            }
+
+            const flowC_summaryDescEl = document.getElementById('flow-c-summary-desc');
+            if (flowC_summaryDescEl) {
+                if (flowC_isDraw) {
+                    flowC_summaryDescEl.textContent = `兩位地主秘密出價，因出價皆為 ${flowC_winnerBid} 萬元平手，系統以「可分回總價值高者優先」判定由 ${flowC_winnerName} 取得，並支付該出價作為補償金給 ${flowC_loserName}。`;
+                } else {
+                    flowC_summaryDescEl.textContent = `兩位地主秘密出價，出價高者（${flowC_winnerName}）取得 ${conflictUnit} 並支付該溢價 ${flowC_winnerBid} 萬元作為補償金給退讓方（${flowC_loserName}），退讓方改至中低樓層。此方案機制透明，但容易流於情感意氣之爭。`;
+                }
+            }
+
+        } catch (e) {
+            console.error("更新圖解路徑發生錯誤:", e);
+        }
     }
 
     // 衝突協商綁定與複製
