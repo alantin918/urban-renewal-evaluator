@@ -1490,6 +1490,11 @@ p {
     color: var(--color-text-primary);
 }
 
+.result-value {
+    text-align: right;
+    color: var(--color-text-primary);
+}
+
 .result-list li span {
     font-weight: 700;
 }
