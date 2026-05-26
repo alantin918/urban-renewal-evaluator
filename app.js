@@ -627,191 +627,164 @@ document.addEventListener('DOMContentLoaded', () => {
             tbody.appendChild(tr);
         });
     }
-
-    // 動態生成下一步行動指南 Check list
     function generateActionPlan(data) {
         const container = document.getElementById('action-plan-container');
         container.innerHTML = ''; // 清空
 
         // 基本行動（所有案件都需要）
-        const baseActions = [
+        const actions = [
             {
                 title: '召開地主說明會，凝聚共識',
-                desc: '將初步的財務估算與診斷結果與地主共享，向大家揭露自建的預算門檻。'
+                desc: '將初步的財務估算與診斷結果與地主共享，向大家揭露自建的預算門檻與自籌款比例。'
             },
             {
-                title: '委託合規的危老推動師或推動團隊進場輔導',
-                desc: '尋求主管機關認可的危老顧問協助，梳理重建流程，防止因盲目爭執而浪費時程獎勵。'
+                title: '委託合規的危老推動師或都更經紀團隊進場輔導',
+                desc: '引進公正第三方專業人員，協助審查法規，建立基本的互信溝通橋樑。'
             }
         ];
 
-        // 依據卡關程度最高的面向，導入額外 3 個核心行動
-        const scores = [
-            { key: 'scoreCapital', value: data.scoreCapital },
-            { key: 'scoreIntegration', value: data.scoreIntegration },
-            { key: 'scoreConstruction', value: data.scoreConstruction },
-            { key: 'scoreProfessional', value: data.scoreProfessional },
-            { key: 'scoreRegulation', value: data.scoreRegulation }
-        ];
-        
-        // 排序，拿到最高分者的 key
-        scores.sort((a, b) => b.value - a.value);
-        const topKey = scores[0].key;
-
-        let extraActions = [];
-
-        if (topKey === 'scoreCapital') {
-            extraActions = [
-                {
-                    title: '向 2-3 家提供危老土建融信託的公股或民營銀行諮詢額度',
-                    desc: '了解目前銀行對於本案土地與造價融資的可行成數，評估地主前期自籌金能否負擔。'
-                },
-                {
-                    title: '接洽都更/危老建經公司，評估辦理「全案信託與續建承諾」',
-                    desc: '建經公司能提供融資配套，是突破資金關卡的最有效第三方工具。'
-                },
-                {
-                    title: '估算地主「分回坪數出售（預售）抵營造成本」之可能性',
-                    desc: '若地主無力自籌，可評估將重建後部分房屋（地主可分回坪數）於開工前進行預售，以款項支付工程款。'
-                }
-            ];
-        } else if (topKey === 'scoreIntegration') {
-            extraActions = [
-                {
-                    title: '聘請專業不動產估價師，進行都更前與都更後權利價值估價',
-                    desc: '藉由具備公信力的報告，定出各戶分配比率，杜絕「誰拿比較多」的無端猜忌。'
-                },
-                {
-                    title: '制定並公佈「公開選配及退補差額規則草案」',
-                    desc: '明確規定如果有多人選中同一個熱門位置時的分配規則，以及多退少補的每坪單價標準。'
-                },
-                {
-                    title: '建立個別溝通檔案，針對持反對或觀望態度地主進行專案訪談',
-                    desc: '了解反對地主的真實顧慮（如高齡長輩對搬遷的恐懼、或一樓店面營業補償等），設法提供補貼方案。'
-                }
-            ];
-        } else if (topKey === 'scoreConstruction') {
-            extraActions = [
-                {
-                    title: '請建築師進行「結構與建材預算優化（價值工程）」',
-                    desc: '調整不必要的昂貴設計，以達到控制營造預算目的，並避免結構過於複雜拉高單價。'
-                },
-                {
-                    title: '接洽中小型且信譽良好的在地營造廠，詢問以「成本加成」合作之意願',
-                    desc: '在造價劇烈變動的環境下，成本加成合約對營造廠更有保障，能提高其承攬意願。'
-                },
-                {
-                    title: '評估委託第三方「監造與驗收」的公正顧問',
-                    desc: '地主自建缺乏建商的工程管理團隊，需外包專業監工以防止營造廠偷工減料或惡性停工。'
-                }
-            ];
-        } else if (topKey === 'scoreProfessional') {
-            extraActions = [
-                {
-                    title: '徵選專業「全案管理 (PCM)」顧問公司，評估代辦全案費用',
-                    desc: 'PCM 顧問能提供一條龍服務。應核算其管理服務費（通常為總造價的 3-6%）是否能納入銀行融資。'
-                },
-                {
-                    title: '擬定重建委員會的議事與決策規約，並經地主大會表決授權',
-                    desc: '確保日常小額開支與行政作業由委員會全權決定，避免因繁瑣行政效率卡關。'
-                },
-                {
-                    title: '安排委員會成員參加地方政府舉辦的都更/危老社區宣導課程',
-                    desc: '建立基本法規素養，能有效減少與建築師、銀行談判時的資訊不對稱。'
-                }
-            ];
-        } else { // scoreRegulation
-            extraActions = [
-                {
-                    title: '請建築師出具細部的「免計容積與容積獎勵申請最大化分析報告」',
-                    desc: '精算每一項危老獎勵（如耐震、綠建築、無障礙等）的取得難度與興建坪數效益。'
-                },
-                {
-                    title: '向都更主管機關申請畸零地或鄰地調處',
-                    desc: '若基地有法規上合併畸零地之必要，可透過公權力介入調處，加快談判時程。'
-                },
-                {
-                    title: '評估獨立重建的「最小興建面積方案」',
-                    desc: '如果鄰地合併確定無望，請建築師在符合消防法規下，規劃本基地獨立興建之最佳化配置，做好備案。'
-                }
-            ];
+        // 根據卡關分數動態增加建議
+        if (data.scoreCapital >= 3) {
+            actions.push({
+                title: '尋求建經公司進行前期費用代墊與融資諮詢',
+                desc: '因資金與融資卡關，應優先與信託銀行及建經公司洽談，爭取全案信託與續建承諾，以取得高成數土建融。'
+            });
+        }
+        if (data.scoreIntegration >= 3) {
+            actions.push({
+                title: '委託獨立估價師進行更新前後權值估算與選配規則擬定',
+                desc: '地主間對分配比例看法分歧，應由 2-3 家公正第三方估價師事務所重新評估，以權利變換之精神作為分配基礎。'
+            });
+        }
+        if (data.scoreConstruction >= 3) {
+            actions.push({
+                title: '進行價值工程研商與成本加成發包準備',
+                desc: '因應營造成本高漲，應請建築師優化工法與建材等級，並考慮與營造廠簽署成本加成管理費 (Cost-Plus) 合約。'
+            });
         }
 
-        const totalActions = [...baseActions, ...extraActions];
-
-        totalActions.forEach((act, idx) => {
+        actions.forEach((act, idx) => {
             const item = document.createElement('div');
             item.className = 'action-item';
             item.innerHTML = `
-                <input type="checkbox" id="action-chk-${idx}">
-                <div class="action-text-group">
-                    <label for="action-chk-${idx}" class="action-title">${idx + 1}. ${act.title}</label>
-                    <span class="action-desc">${act.desc}</span>
+                <div class="action-checkbox-wrapper">
+                    <input type="checkbox" id="action-chk-${idx}" class="action-checkbox">
+                    <label for="action-chk-${idx}" class="action-title">${act.title}</label>
                 </div>
+                <p class="action-desc">${act.desc}</p>
             `;
             container.appendChild(item);
         });
     }
 
-    // ==========================================================================
-    // 5. 地主選配衝突與找補試算器 (Conflict Solver Core Logic)
-    // ==========================================================================
-
-    function setupConflictSolver() {
-        const btnSolve = document.getElementById('btn-solve-conflict');
-        const btnCopy = document.getElementById('btn-copy-mou');
-
-        if (!btnSolve) return;
-
-        btnSolve.addEventListener('click', () => {
-            solveConflict();
-        });
-
-        if (btnCopy) {
-            btnCopy.addEventListener('click', () => {
-                const mouText = document.getElementById('conflict-mou-text').textContent;
-                navigator.clipboard.writeText(mouText).then(() => {
-                    const originalText = btnCopy.innerHTML;
-                    btnCopy.innerHTML = '<i class="fa-solid fa-check"></i> 已複製';
-                    btnCopy.classList.remove('btn-secondary');
-                    btnCopy.classList.add('btn-success');
-                    
-                    setTimeout(() => {
-                        btnCopy.innerHTML = originalText;
-                        btnCopy.classList.remove('btn-success');
-                        btnCopy.classList.add('btn-secondary');
-                    }, 2000);
-                }).catch(err => {
-                    console.error('無法複製文字: ', err);
-                    alert('複製失敗，請手動選取複製。');
-                });
-            });
-        }
-
-        // 初始化執行一次預設案例 (林美純 vs. 陳政助)
-        solveConflict();
-    }
-
+    // === 地主選配衝突協商試算器核心邏輯 ===
     function solveConflict() {
         // 1. 獲取輸入參數
         const conflictUnit = document.getElementById('conflict-unit').value;
-        const conflictValue = parseFloat(document.getElementById('conflict-value').value) || 0;
+        const conflictValue = parseFloat(document.getElementById('conflict-value').value) || 3000;
+        const mode = document.getElementById('conflict-mode').value;
         
-        const nameA = document.getElementById('landowner-a-name').value || '地主甲';
-        const totalA = parseFloat(document.getElementById('landowner-a-total').value) || 0;
+        const nameA = document.getElementById('landowner-a-name').value || "林美純";
+        const totalA = parseFloat(document.getElementById('landowner-a-total').value) || 4500;
         const bidA = parseFloat(document.getElementById('landowner-a-bid').value) || 0;
         
-        const nameB = document.getElementById('landowner-b-name').value || '地主乙';
-        const totalB = parseFloat(document.getElementById('landowner-b-total').value) || 0;
+        const nameB = document.getElementById('landowner-b-name').value || "陳政助";
+        const totalB = parseFloat(document.getElementById('landowner-b-total').value) || 3500;
         const bidB = parseFloat(document.getElementById('landowner-b-bid').value) || 0;
 
         const winnerBadge = document.getElementById('conflict-winner-badge');
         const winDesc = document.getElementById('conflict-win-desc');
-        const winCard = document.getElementById('conflict-win-card');
 
-        // 偵測是否為 3 戶拆分規劃
-        if (conflictUnit.includes('3戶') || conflictUnit.includes('三戶')) {
-            // === 方案 C: 戶別拆分選配協商 ===
+        // 單價設定 (萬/坪)
+        const p10Price = 150.55; 
+        const p2Price = 141.55;  
+        
+        if (mode === 'premium-p2') {
+            // === 方案 A: 頂樓全拿打通 + 退至 2 樓現金補償 (林美純/陳政助卡關專用) ===
+            const a10Area = 49;  // 林美純選滿 10樓 49 坪
+            const bDesiredArea = 22.67; // 陳政助原本想選的坪數
+            
+            // 1. 官方樓層價差 (10樓與2樓單價差: 9萬/坪)
+            const priceDiffPerPing = p10Price - p2Price; // 9 萬/坪
+            const officialValueDiff = Math.round(bDesiredArea * priceDiffPerPing); // 22.67 * 9 = 204 萬元
+            
+            // 2. 二樓市場抗性之折讓補償 (以2樓官方總價 22.67坪 * 141.55萬 = 3209萬 之 8% 估算)
+            const p2OfficialTotal = bDesiredArea * p2Price; // 3208.9 萬元
+            const marketDiscountCompensation = Math.round(p2OfficialTotal * 0.08); // 約 257 萬元
+            
+            // 林美純應支付陳政助的現金補償金
+            const fairPremiumPay = marketDiscountCompensation; // 257 萬元
+
+            // 3. 雙方都更帳戶權值計算
+            // 林美純選滿 10 樓 (49 坪)，消耗都更權值 49 * 150.55 = 7377 萬。
+            const a10Cost = Math.round(a10Area * p10Price); // 7377 萬
+            const aRemain = totalA - a10Cost; // -2877 萬 (林美純需自備找補給專戶)
+
+            // 陳政助退至 2 樓選 22.67 坪，消耗都更權值 22.67 * 141.55 = 3209 萬。
+            const b2Cost = Math.round(bDesiredArea * p2Price); 
+            // 陳政助剩餘可用權值 (原 3500 萬 - 2樓 3209 萬 = 291 萬)
+            const bRemain = totalB - b2Cost; 
+
+            // 陳政助實際獲得總資產 = 2樓新屋價值 + 獲得之現金補償
+            const bActualTotal = b2Cost + fairPremiumPay;
+
+            // 4. 更新 UI 狀態
+            winnerBadge.textContent = `方案 A 判定：林美純全拿 10 樓，補償退讓至 2 樓的陳政助`;
+            winnerBadge.style.background = 'var(--color-gold)';
+            winnerBadge.style.boxShadow = '0 0 10px var(--color-gold-glow)';
+            
+            winDesc.innerHTML = `經評估，建築師規劃之 10 樓具打通合併之結構可行性。由 <strong>${nameA}</strong> 選滿 10 樓共 <strong>${a10Area} 坪</strong> 獨佔打通使用；<strong>${nameB}</strong> 同意讓步退至 2 樓選配 <strong>${bDesiredArea} 坪</strong>。<br>為公平補償陳政助，林美純需額外支付 <strong>現金補償金 ${fairPremiumPay} 萬元</strong> (以2樓官方造價的 8% 補貼其市場抗性與樓層差)。`;
+
+            // 得標者卡片 (林美純)
+            document.getElementById('winner-result-title').textContent = `${nameA} (獨佔 10 樓全層)`;
+            document.getElementById('win-unit-name').textContent = `10樓全層 (打通合併共 ${a10Area} 坪)`;
+            document.getElementById('win-total-cost').textContent = a10Cost.toLocaleString();
+            document.getElementById('win-cost-formula').textContent = "(獨佔打通，補償陳政助)";
+            document.getElementById('win-premium-pay').textContent = fairPremiumPay.toLocaleString();
+            document.getElementById('win-remain-val').textContent = aRemain.toLocaleString();
+
+            // 退讓者卡片 (陳政助)
+            document.getElementById('loser-result-title').textContent = `${nameB} (讓步至 2 樓)`;
+            document.getElementById('lose-unit-name').textContent = `2樓選配戶 (${bDesiredArea} 坪)`;
+            document.getElementById('lose-premium-get').textContent = fairPremiumPay.toLocaleString();
+            document.getElementById('lose-actual-val').textContent = bActualTotal.toLocaleString();
+            document.getElementById('lose-remain-val').textContent = bRemain.toLocaleString();
+
+            // 5. 生成公平補償 MOU
+            const mouText = `都市更新/危老重建 地主選配讓步與公平補償協議書 (草案)
+
+立協議書人：
+甲方（退讓方）：${nameB} (陳政助)
+乙方（得標方）：${nameA} (林美純)
+
+緣甲、乙雙方同為本都市更新/危老重建計畫之土地所有權人，因重建後新建物「10樓（規劃3戶，總面積49坪，具備打通可行性）」發生選配重疊衝突。因乙方有選滿10樓打通之強烈意願，而甲方原規劃自住頂樓、堅決不願選配2樓。為求全體地主重建計畫順利推動，經雙方善意協商，同意依據「樓層官方差額」與「二樓市場劣勢折讓」之量化基礎，達成以下公平補償協議：
+
+一、目標樓層選配與讓步：
+    1. 乙方【林美純】選配取得 10 樓全層（共 49 坪，官方總核估值 ${a10Cost} 萬元），並保留未來打通合併使用之權利。
+    2. 甲方【陳政助】同意退讓，改為選配 2 樓房屋（面積 ${bDesiredArea} 坪，官方核估值 ${b2Cost} 萬元）。
+
+二、量化公平補償金約定：
+    雙方同意由乙方【林美純】以現金額外支付甲方【陳政助】新台幣【${fairPremiumPay}】萬元整（下稱補償金），其計算公式依據如下：
+    - 二樓市場劣勢特別折讓補償：以2樓官方總價 (${bDesiredArea}坪 × 141.55萬 = ${b2Cost}萬元) 之 8% 精神與市場抗性折讓補償，計新台幣 ${fairPremiumPay} 萬元。
+    - 甲方改選2樓後，多出之都更分配權值差額（原規劃10樓 ${Math.round(bDesiredArea * p10Price)} 萬 - 實際2樓 ${b2Cost} 萬 = ${officialValueDiff} 萬元），保留於甲方都更帳戶中。
+
+三、給付與信託方式：
+    前開現金補償金共計新台幣【${fairPremiumPay}】萬元整，應於信託銀行通知辦理首期土建融撥款時，由乙方【林美純】一次性匯入信託專戶，並由建經公司依專款專用原則，直接撥付至甲方【陳政助】之指定帳戶，不計入都更專案內找補。
+
+四、剩餘可用價值：
+    選配後雙方剩餘之更新前權利價值（甲方剩餘可用權值 ${bRemain} 萬元、乙方剩餘可用權值 ${aRemain} 萬元），甲方得依本重建計畫之選配規約，優先選配其餘車位、店面，或於完工交屋時辦理差額找補折現。
+
+五、本協議草案僅供協商使用，雙方於正式都更契約與信託契約簽署後，本協議即作為其附件並同時生效。
+
+協議書立人簽署：
+甲方（退讓方）：                        （簽名蓋章）
+乙方（得標方）：                        （簽名蓋章）
+中華民國 年 月 日`;
+
+            document.getElementById('conflict-mou-text').textContent = mouText;
+
+        } else if (mode === 'split-units') {
+            // === 方案 B: 頂樓戶別拆分選配 (陳政助選1戶，林美純選2戶) ===
             const unitValue = Math.round(conflictValue / 3); // 單戶價值 (預設 1000萬)
             
             // 陳政助 (地主B) 選 A 戶自住 (消耗 1 戶價值)
@@ -825,16 +798,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const loserRemain = totalA - (unitValue * 2);
 
             // 更新 UI 狀態為和平解決 (綠色)
-            winnerBadge.textContent = `最佳推薦妥協方案：分拆選配 (和平解決)`;
+            winnerBadge.textContent = `方案 B 判定：分拆選配 (和平解決，無補償)`;
             winnerBadge.style.background = 'var(--color-success)';
             winnerBadge.style.boxShadow = '0 0 10px var(--color-success-glow)';
             
-            winDesc.innerHTML = `由於 10 樓規劃為 3 戶 (A、B、C 戶，每戶官方估值約 <strong>${unitValue.toLocaleString()} 萬元</strong>)。<strong>${nameB} (陳政助)</strong> 僅需自住，建議選配 10 樓 A 戶；<strong>${nameA} (林美純)</strong> 則選配另 2 戶。雙方在 10 樓和平共存，無選配衝突，故無需支付加價補償金。`;
+            winDesc.innerHTML = `由於 10 樓規劃為 3 戶。<strong>${nameB} (陳政助)</strong> 僅需自住，建議選配 10 樓 A 戶；<strong>${nameA} (林美純)</strong> 則選配另 2 戶。雙方在 10 樓和平共存，但此方案下林美純<strong>無法進行打通合併</strong>，故無須支付溢價補償金。`;
 
             // 更新結果卡片
             document.getElementById('winner-result-title').textContent = `${nameB} (選配 10 樓 A 戶)`;
             document.getElementById('win-unit-name').textContent = '10樓 A 戶 (自住)';
             document.getElementById('win-total-cost').textContent = winnerCost.toLocaleString();
+            document.getElementById('win-cost-formula').textContent = "(分拆選配，免溢價)";
             document.getElementById('win-premium-pay').textContent = winnerPayToLoser.toLocaleString();
             document.getElementById('win-remain-val').textContent = winnerRemain.toLocaleString();
 
@@ -848,13 +822,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const mouText = `都市更新/危老重建 地主選配讓步與戶別分拆協議書 (草案)
 
 立協議書人：
-甲方：${nameA}
-乙方：${nameB}
+甲方：${nameA} (林美純)
+乙方：${nameB} (陳政助)
 
-緣甲、乙雙方同為本都市更新/危老重建計畫之全體土地所有權人，因重建後新建物「${conflictUnit}」（下稱目標樓層，官方總估定價值 ${conflictValue} 萬元，每戶平均價值 ${unitValue} 萬元）發生選配重疊衝突。為求全體地主利益一致，促成重建計畫順利推動，經雙方善意協商，達成以下選配讓步與拆分協議：
+緣甲、乙雙方同為本都市更新/危老重建計畫之全體土地所有權人，因重建後新建物「10樓（規劃3戶，總面積49坪）」發生選配重疊衝突。為求全體地主利益一致，促成重建計畫順利推動，經雙方善意協商，達成以下選配讓步與拆分協議：
 
 一、目標樓層選配拆分：
-    雙方同意將目標樓層 (10樓) 進行拆分選配：
+    雙方同意將目標樓層 (10樓) 進行拆分選配，且不進行戶別打通：
     1. 乙方【${nameB}】選配 10 樓 A 戶 (價值 ${unitValue} 萬元) 用於自住。
     2. 甲方【${nameA}】選配 10 樓 B 戶與 C 戶 (共計價值 ${unitValue * 2} 萬元)。
 
@@ -862,7 +836,7 @@ document.addEventListener('DOMContentLoaded', () => {
     因採分戶選配解決，雙方於目標樓層皆有分回，且皆大歡喜，故乙方無須支付甲方任何加價補償金。
 
 三、剩餘可用價值與配戶：
-    選配後雙方剩餘之更新前權利價值（甲方剩餘可用權值 ${loserRemain} 萬元、乙方剩餘可用權值 ${winnerRemain} 萬元），得依本重建計畫之選配規約，於中低樓層（如 4 樓、2 樓空戶）選配其餘房屋、車位、店面，或於完工交屋時辦理差額找補折現。其中乙方原規劃賣出之部分，改至中低樓層進行選配，以利銷售變現。
+    選配後雙方剩餘之更新前權利價值（甲方剩餘可用權值 ${loserRemain} 萬元、乙方剩餘可用權值 ${winnerRemain} 萬元），得依本重建計畫之選配規約，於其餘樓層選配房屋、車位、店面，或於完工交屋時辦理差額找補折現。
 
 四、本協議草案僅供協商使用，雙方於正式都更契約與信託契約簽署後，本協議即作為其附件並同時生效。
 
@@ -874,7 +848,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('conflict-mou-text').textContent = mouText;
 
         } else {
-            // === 方案 A/B: 內部溢價競標補償模式 ===
+            // === 方案 C: 地主自擬加價競標找補 ===
             winnerBadge.style.background = 'var(--color-gold)';
             winnerBadge.style.boxShadow = '0 0 10px var(--color-gold-glow)';
 
@@ -925,7 +899,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const loserActualTotal = loserUnitCost + winnerPayToLoser;
             const loserRemain = loserTotal - loserUnitCost;
 
-            winnerBadge.textContent = `判定得標者：${winnerName}`;
+            winnerBadge.textContent = `方案 C 判定：${winnerName} 競標取得目標戶`;
             
             if (isDraw) {
                 winDesc.innerHTML = `雙方出價皆為 <strong>${winnerBid} 萬元</strong> 平手。<br>經系統以「更新前可分回總價值較高者優先選配」之實務標準，判定由 <strong>${winnerName}</strong> 取得 ${conflictUnit}。`;
@@ -937,12 +911,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('winner-result-title').textContent = `${winnerName} (選配得標)`;
             document.getElementById('win-unit-name').textContent = conflictUnit;
             document.getElementById('win-total-cost').textContent = winnerCost.toLocaleString();
+            document.getElementById('win-cost-formula').textContent = `(官方價 + 自發加價 ${winnerBid} 萬)`;
             document.getElementById('win-premium-pay').textContent = winnerPayToLoser.toLocaleString();
             document.getElementById('win-remain-val').textContent = winnerRemain.toLocaleString();
 
             // 退讓者卡片
             document.getElementById('loser-result-title').textContent = `${loserName} (協商退讓)`;
-            document.getElementById('lose-unit-name').textContent = `中低樓層 (官方價 ${loserUnitCost.toLocaleString()} 萬)`;
+            document.getElementById('lose-unit-name').textContent = `中低樓層 (官方核估約 ${loserUnitCost.toLocaleString()} 萬)`;
             document.getElementById('lose-premium-get').textContent = winnerPayToLoser.toLocaleString();
             document.getElementById('lose-actual-val').textContent = loserActualTotal.toLocaleString();
             document.getElementById('lose-remain-val').textContent = loserRemain.toLocaleString();
@@ -954,7 +929,7 @@ document.addEventListener('DOMContentLoaded', () => {
 甲方（退讓方）：${loserName}
 乙方（得標方）：${winnerName}
 
-緣甲、乙雙方同為本都市更新/危老重建計畫之全體土地所有權人，因重建後新建物「${conflictUnit}」（下稱目標戶，官方估定價值 ${conflictValue} 萬元）發生選配重疊衝突。為求全體地主利益一致，促成重建計畫順利推動，經雙方善意協商，達成以下選配讓步與補償協議：
+緣甲、乙雙方同為本都市更新/危老重建計畫之土地所有權人，因重建後新建物「${conflictUnit}」（下稱目標戶，官方估定價值 ${conflictValue} 萬元）發生選配重疊衝突。為求全體地主利益一致，促成重建計畫順利推動，經雙方善意協商，達成以下選配讓步與補償協議：
 
 一、目標戶選配歸屬：
     雙方同意目標戶由乙方【${winnerName}】選配取得。
@@ -979,6 +954,29 @@ document.addEventListener('DOMContentLoaded', () => {
 中華民國 年 月 日`;
 
             document.getElementById('conflict-mou-text').textContent = mouText;
+        }
+    }
+
+    // 衝突協商綁定與複製
+    function setupConflictSolver() {
+        const btnSolve = document.getElementById('btn-solve-conflict');
+        if (btnSolve) {
+            btnSolve.addEventListener('click', solveConflict);
+        }
+
+        const btnCopy = document.getElementById('btn-copy-mou');
+        if (btnCopy) {
+            btnCopy.addEventListener('click', () => {
+                const mouText = document.getElementById('conflict-mou-text').textContent;
+                navigator.clipboard.writeText(mouText).then(() => {
+                    btnCopy.innerHTML = '<i class="fa-solid fa-check"></i> 已複製';
+                    setTimeout(() => {
+                        btnCopy.innerHTML = '<i class="fa-solid fa-copy"></i> 複製協議書';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('複製失敗:', err);
+                });
+            });
         }
     }
 
