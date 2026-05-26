@@ -66,83 +66,381 @@
                 <h3 class="section-title"><i class="fa-solid fa-people-arrows text-gold"></i> 地主選配衝突與找補試算器 (實務協商模組)</h3>
                 <p class="section-desc">當多位地主同時爭取同一精華樓層（目前建築師規劃為 10 樓共 3 戶）且卡關時，此工具透過實務上的「戶別分拆選配」或「內部加價競標補償」模式，協助地主算出客觀的找補與補償金額，快速化解僵局。</p>
                 
-                <!-- 協商方案導覽說明 -->
-                <div class="conflict-modes-intro">
-                    <div class="mode-intro-card mode-a">
-                        <h5>方案 A：頂樓全拿打通 + 退 2 樓現金補償</h5>
-                        <p><strong>適用場景</strong>：高分回地主（林美純）想選滿頂樓打通，退讓方（陳政助）不想去 2 樓。</p>
-                        <ul class="intro-list">
-                            <li>頂樓地主消耗權值獨佔打通。</li>
-                            <li>退讓地主至 2 樓，獲得 <strong>8% 的特別現金補償（約 257 萬元）</strong>。</li>
-                            <li>退讓地主節省的官方價差保留在都更帳戶中。</li>
-                        </ul>
+                <!-- 協商方案多維度互動評估中心 -->
+                <div class="comparison-matrix-wrapper" style="margin-bottom: 3rem;">
+                    <div class="matrix-header-group">
+                        <h5 class="matrix-title">
+                            <i class="fa-solid fa-people-arrows text-gold"></i> 協商方案互動評估中心
+                        </h5>
+                        <p class="matrix-subtitle">整合多面向數據與實務利弊，切換不同視角深入比較，點擊方案可直接載入下方計算機</p>
                     </div>
-                    <div class="mode-intro-card mode-b">
-                        <h5>方案 B：頂樓戶別拆分選配 (免補償)</h5>
-                        <p><strong>適用場景</strong>：地主僅需自住其中一戶，雙方願意在頂樓當鄰居。</p>
-                        <ul class="intro-list">
-                            <li>頂樓 3 戶按比例分配（如陳政助 1 戶，林美純 2 戶）。</li>
-                            <li>雙方和平共存，無選配重疊。</li>
-                            <li><strong>缺點</strong>：林美純無法打通合併為大坪數。</li>
-                        </ul>
-                    </div>
-                    <div class="mode-intro-card mode-c">
-                        <h5>方案 C：地主自擬加價競標找補</h5>
-                        <p><strong>適用場景</strong>：多位地主同時爭取單一精華戶，且無退讓意願。</p>
-                        <ul class="intro-list">
-                            <li>雙方填寫願加價上限，由系統判定出價高者取得。</li>
-                            <li>得標溢價金額做為特別補償，直接以現金撥付給退讓方。</li>
-                        </ul>
-                    </div>
-                </div>
 
-                <!-- 方案詳細對比表格 -->
-                <div class="table-responsive" style="margin-bottom: 2.5rem; background: rgba(255,255,255,0.01); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 1.5rem;">
-                    <h5 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--color-text-primary); font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fa-solid fa-code-compare text-gold"></i> 協商方案多維度對比表
-                    </h5>
-                    <table class="data-table" style="font-size: 0.85rem; width: 100%;">
-                        <thead>
-                            <tr>
-                                <th>協商方案</th>
-                                <th>林美純分回規劃</th>
-                                <th>陳政助分回規劃</th>
-                                <th>找補/現金補償</th>
-                                <th>10樓打通</th>
-                                <th>方案優點</th>
-                                <th>主要挑戰 / 缺點</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>方案 A：頂樓全拿打通<br>+ 退 2 樓現金補償</strong></td>
-                                <td>選滿 10 樓全層共 3 戶<br>(消耗 49 坪，約 7,377 萬)</td>
-                                <td>退讓至 2 樓選配自住戶<br>(消耗 22.67 坪，約 3,209 萬)</td>
-                                <td class="text-success"><strong>林美純 額外支付<br>陳政助 257 萬現金</strong></td>
-                                <td class="text-success"><strong>可以打通</strong> (全拿)</td>
-                                <td>地主各取所需。林美純能實現打通大坪數；陳政助多拿 257 萬現金，且都更帳戶省下 204 萬，權值運用極彈性。</td>
-                                <td>林美純期初找補給專戶與支付陳政助的現金壓力較大（共需自籌約 3,134 萬）。</td>
-                            </tr>
-                            <tr class="table-highlight">
-                                <td><strong>方案 B：頂樓戶別拆分選配<br>(和平共存，無補償)</strong></td>
-                                <td>選配 10 樓 B、C 戶共 2 戶<br>(消耗 2 戶，約 2,000 萬)</td>
-                                <td>選配 10 樓 A 戶自住<br>(消耗 1 戶，約 1,000 萬)</td>
-                                <td>雙方均在 10 樓，無衝突<br><strong>無需支付補償金</strong></td>
-                                <td class="text-danger"><strong>無法打通</strong> (分拆)</td>
-                                <td>無現金補償問題，兩地主皆分回 10 樓高樓層，皆大歡喜，整合難度最低。</td>
-                                <td>林美純無法打通合併成單一全層戶。林美純剩餘的 2,500 萬權值需改去低樓層選配。</td>
-                            </tr>
-                            <tr>
-                                <td><strong>方案 C：地主自擬加價競標<br>(價高者得，溢價補償)</strong></td>
-                                <td>出價高者：選滿 10 樓<br>(消耗 3,000 萬 + 溢價)</td>
-                                <td>退讓者：改選中低樓層<br>(消耗中低樓層，享 90% 官方價)</td>
-                                <td>得標者支付其自擬之<br><strong>加價溢價金給退讓方</strong></td>
-                                <td><strong>視競標結果而定</strong></td>
-                                <td>機制透明，以金錢衡量偏好。退讓方獲得高額溢價現金補償，有助心理平衡。</td>
-                                <td>可能流於意氣之爭而抬高不合理的溢價。退讓方完全與頂樓無緣。</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- 視角切換控制鈕 -->
+                    <div class="view-tabs-control">
+                        <button type="button" class="view-tab-btn active" data-view="matrix">
+                            <i class="fa-solid fa-table-cells"></i>
+                            <span>對比矩陣 (Table)</span>
+                        </button>
+                        <button type="button" class="view-tab-btn" data-view="path">
+                            <i class="fa-solid fa-route"></i>
+                            <span>圖解路徑 (Flow)</span>
+                        </button>
+                        <button type="button" class="view-tab-btn" data-view="metrics">
+                            <i class="fa-solid fa-chart-bar"></i>
+                            <span>量化指標 (Metrics)</span>
+                        </button>
+                    </div>
+
+                    <div class="comparison-view-content">
+                        <!-- 視角一：對比矩陣 -->
+                        <div class="view-panel active" id="view-matrix">
+                            <!-- 行動版切換分頁按鈕 (僅在手機版顯示) -->
+                            <div class="matrix-tabs-control">
+                                <button type="button" class="matrix-tab-btn active" data-scheme="a">
+                                    <span>方案 A</span>
+                                    <small>頂樓全拿</small>
+                                </button>
+                                <button type="button" class="matrix-tab-btn" data-scheme="b">
+                                    <span>方案 B</span>
+                                    <small>拆分選配</small>
+                                </button>
+                                <button type="button" class="matrix-tab-btn" data-scheme="c">
+                                    <span>方案 C</span>
+                                    <small>競標找補</small>
+                                </button>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="matrix-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="dim-col">評估維度</th>
+                                            <th class="scheme-col scheme-a active-col clickable-scheme" data-scheme-value="premium-p2">
+                                                <div class="scheme-header-cell">
+                                                    <span class="scheme-badge best">最推薦妥協</span>
+                                                    <span class="scheme-name">方案 A</span>
+                                                    <span class="scheme-desc">頂樓全拿 + 退讓現金補償</span>
+                                                    <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                                                    <div class="load-scheme-trigger"><i class="fa-solid fa-play"></i> 點擊載入計算</div>
+                                                </div>
+                                            </th>
+                                            <th class="scheme-col scheme-b clickable-scheme" data-scheme-value="split-units">
+                                                <div class="scheme-header-cell">
+                                                    <span class="scheme-badge">和平共存</span>
+                                                    <span class="scheme-name">方案 B</span>
+                                                    <span class="scheme-desc">頂樓戶別拆分選配</span>
+                                                    <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                                                    <div class="load-scheme-trigger"><i class="fa-solid fa-play"></i> 點擊載入計算</div>
+                                                </div>
+                                            </th>
+                                            <th class="scheme-col scheme-c clickable-scheme" data-scheme-value="bid-compensation">
+                                                <div class="scheme-header-cell">
+                                                    <span class="scheme-badge">競價機制</span>
+                                                    <span class="scheme-name">方案 C</span>
+                                                    <span class="scheme-desc">地主自擬加價競標</span>
+                                                    <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                                                    <div class="load-scheme-trigger"><i class="fa-solid fa-play"></i> 點擊載入計算</div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="dim-col"><i class="fa-solid fa-arrows-left-right text-gold"></i> 10樓打通結構</td>
+                                            <td class="scheme-col scheme-a active-col text-success"><span class="status-badge yes"><i class="fa-solid fa-circle-check"></i> 可以打通</span><br><small>由林美純獨佔打通，結構與空間完整</small></td>
+                                            <td class="scheme-col scheme-b text-danger"><span class="status-badge no"><i class="fa-solid fa-circle-xmark"></i> 無法打通</span><br><small>分拆三戶選配，維持原設計</small></td>
+                                            <td class="scheme-col scheme-c text-warning"><span class="status-badge maybe"><i class="fa-solid fa-circle-question"></i> 視結果而定</span><br><small>由得標方決定是否全拿打通</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="dim-col"><i class="fa-solid fa-user-tag text-gold"></i> 林美純分回規劃</td>
+                                            <td class="scheme-col scheme-a active-col"><strong>選滿 10 樓共 3 戶</strong><br><small>消耗 49 坪，約 7,377 萬<br>(超額選配，需付找補金)</small></td>
+                                            <td class="scheme-col scheme-b"><strong>選 10 樓 B、C 戶 (2戶)</strong><br><small>消耗約 2,000 萬權值<br>(其餘 2,500 萬權值需去低樓層)</small></td>
+                                            <td class="scheme-col scheme-c"><strong>視出價決定</strong><br><small>得標：拿 10 樓全層<br>未得標：去中低樓層選配</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="dim-col"><i class="fa-solid fa-user-tag text-gold"></i> 陳政助分回規劃</td>
+                                            <td class="scheme-col scheme-a active-col"><strong>退至 2 樓選配自住戶</strong><br><small>消耗 22.67 坪，約 3,209 萬<br>(多得 257 萬現金 + 291 萬可用權值)</small></td>
+                                            <td class="scheme-col scheme-b"><strong>選 10 樓 A 戶自住</strong><br><small>消耗約 1,000 萬權值<br>(無溢價，和平與林美純共存)</small></td>
+                                            <td class="scheme-col scheme-c"><strong>視出價決定</strong><br><small>得標：拿 10 樓全層<br>未得標：去中低樓層選配</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="dim-col"><i class="fa-solid fa-hand-holding-dollar text-gold"></i> 找補與現金補償</td>
+                                            <td class="scheme-col scheme-a active-col text-success"><strong>林美純 額外支付<br>陳政助 257 萬現金</strong><br><small>(多得專戶找補退回 204 萬)</small></td>
+                                            <td class="scheme-col scheme-b"><strong>雙方免額外補償</strong><br><small>(在 10 樓直接和平共存)</small></td>
+                                            <td class="scheme-col scheme-c"><strong>得標方支付<br>加價溢價金給退讓方</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="dim-col"><i class="fa-solid fa-plus text-success"></i> 方案優勢</td>
+                                            <td class="scheme-col scheme-a active-col text-success-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>林美純實現大坪數打通理想</li>
+                                                    <li>陳政助獲 257 萬現金彌補 2 樓抗性</li>
+                                                    <li>陳政助都更專戶省下 204 萬找補款</li>
+                                                </ul>
+                                            </td>
+                                            <td class="scheme-col scheme-b text-success-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>雙方皆能入住頂樓精華戶</li>
+                                                    <li>免除複雜現金往來或私下協議</li>
+                                                    <li>實務整合難度最低</li>
+                                                </ul>
+                                            </td>
+                                            <td class="scheme-col scheme-c text-success-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>機制絕對公開透明、願買願受</li>
+                                                    <li>以金錢衡量偏好，退讓方得高額補償</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="dim-col"><i class="fa-solid fa-minus text-danger"></i> 主要挑戰 / 缺點</td>
+                                            <td class="scheme-col scheme-a active-col text-danger-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>林美純期初自籌資金壓力較大 (共需籌措約 3,134 萬元)</li>
+                                                </ul>
+                                            </td>
+                                            <td class="scheme-col scheme-b text-danger-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>林美純無法擁有整層打通戶</li>
+                                                    <li>林美純剩餘權值被迫去低樓層選配</li>
+                                                </ul>
+                                            </td>
+                                            <td class="scheme-col scheme-c text-danger-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>可能流於意氣之爭而抬高溢價</li>
+                                                    <li>退讓方完全無緣頂樓精華層</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 視角二：圖解路徑 -->
+                        <div class="view-panel" id="view-path">
+                            <div class="visual-path-grid">
+                                <!-- 方案 A 卡片 -->
+                                <div class="visual-path-card card-scheme-a clickable-scheme" data-scheme-value="premium-p2">
+                                    <div class="path-card-header">
+                                        <span class="badge-scheme best">方案 A - 頂樓全拿與退讓補償</span>
+                                        <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
+                                    </div>
+                                    <div class="path-diagram">
+                                        <div class="path-node owner-a">
+                                            <span class="node-title">林美純 (地主甲)</span>
+                                            <div class="node-box gold-glow">
+                                                <span class="unit">10 樓全層 (打通)</span>
+                                                <span class="detail">取得 49 坪 • 消耗 7,377 萬</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="path-arrow-flow">
+                                            <div class="flow-line">
+                                                <span class="flow-label"><i class="fa-solid fa-coins text-gold"></i> 支付現金補償 257 萬</span>
+                                                <i class="fa-solid fa-chevron-down arrow-dir"></i>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="path-node owner-b">
+                                            <span class="node-title">陳政助 (地主乙)</span>
+                                            <div class="node-box success-glow">
+                                                <span class="unit">2 樓自住戶</span>
+                                                <span class="detail">取得 22.67 坪 • 剩 291 萬權值</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="path-summary-desc">
+                                        林美純享有整層大坪數空間，並用現金補償陳政助 257 萬元，彌補其退讓至 2 樓之市場抗性，陳政助同時省下原本都更案中需付的找補款 204 萬元，是實務最推薦雙贏解法。
+                                    </div>
+                                </div>
+                                
+                                <!-- 方案 B 卡片 -->
+                                <div class="visual-path-card card-scheme-b clickable-scheme" data-scheme-value="split-units">
+                                    <div class="path-card-header">
+                                        <span class="badge-scheme">方案 B - 頂樓分拆選配</span>
+                                        <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
+                                    </div>
+                                    <div class="path-diagram">
+                                        <div class="path-node-split">
+                                            <div class="split-side border-right">
+                                                <span class="node-title">林美純 (地主甲)</span>
+                                                <div class="node-box gold-glow">
+                                                    <span class="unit">10樓 B, C 戶</span>
+                                                    <span class="detail">取得 2 戶 • 消耗 2,000 萬</span>
+                                                </div>
+                                            </div>
+                                            <div class="split-vs"><i class="fa-solid fa-handshake text-success"></i></div>
+                                            <div class="split-side">
+                                                <span class="node-title">陳政助 (地主乙)</span>
+                                                <div class="node-box gold-glow">
+                                                    <span class="unit">10樓 A 戶</span>
+                                                    <span class="detail">取得 1 戶 • 消耗 1,000 萬</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="path-arrow-flow empty">
+                                            <div class="flow-line">
+                                                <span class="flow-label"><i class="fa-solid fa-ban"></i> 雙方零現金補償 (和平共存)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="path-summary-desc">
+                                        雙方平分 10 樓戶別（陳政助 1 戶，林美純 2 戶），在同樓層當鄰居，無需支付任何額外現金。但林美純無法打通，剩餘的 2,500 萬都更權值需分散選配低樓層。
+                                    </div>
+                                </div>
+                                
+                                <!-- 方案 C 卡片 -->
+                                <div class="visual-path-card card-scheme-c clickable-scheme" data-scheme-value="bid-compensation">
+                                    <div class="path-card-header">
+                                        <span class="badge-scheme">方案 C - 自擬加價競標</span>
+                                        <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
+                                    </div>
+                                    <div class="path-diagram">
+                                        <div class="path-node owner-winner">
+                                            <span class="node-title">競價得標者 (出價高者)</span>
+                                            <div class="node-box primary-glow">
+                                                <span class="unit">10 樓全層 (獨佔)</span>
+                                                <span class="detail">官方估值 + 自願溢價</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="path-arrow-flow">
+                                            <div class="flow-line">
+                                                <span class="flow-label"><i class="fa-solid fa-gavel text-gold"></i> 支付競標溢價金</span>
+                                                <i class="fa-solid fa-chevron-down arrow-dir"></i>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="path-node owner-loser">
+                                            <span class="node-title">競價退讓者 (出價低者)</span>
+                                            <div class="node-box muted-glow">
+                                                <span class="unit">中低樓層戶</span>
+                                                <span class="detail">獲得全額競標金作為特別補償</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="path-summary-desc">
+                                        兩位地主秘密出價，出價高者取得 10 樓全層並支付該溢價作為補償金給退讓方，退讓方改至中低樓層。此方案規則透明，但容易流於意氣競標或導致退讓地主強烈不滿。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 視角三：量化指標 -->
+                        <div class="view-panel" id="view-metrics">
+                            <div class="metrics-comparison-container">
+                                <div class="metric-row">
+                                    <div class="metric-header">
+                                        <div class="metric-info">
+                                            <i class="fa-solid fa-wallet text-gold"></i>
+                                            <span class="metric-title">地主甲 (林美純) 資金負擔壓力</span>
+                                        </div>
+                                        <p class="metric-explanation">林美純因超額選配 10 樓全層打通，需自籌找補差額的期初自籌資金負擔程度。</p>
+                                    </div>
+                                    <div class="metric-bars">
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 A (打通)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-red" style="width: 90%;"></div></div>
+                                            <span class="bar-val font-red">高壓力 (約需 3,134 萬)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 B (分拆)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 30%;"></div></div>
+                                            <span class="bar-val font-green">極輕 (免補償)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 C (競標)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-yellow" style="width: 65%;"></div></div>
+                                            <span class="bar-val font-yellow">中等 (視最終得標溢價)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-row">
+                                    <div class="metric-header">
+                                        <div class="metric-info">
+                                            <i class="fa-solid fa-arrows-spin text-gold"></i>
+                                            <span class="metric-title">協商推動難易度 (整合速度)</span>
+                                        </div>
+                                        <p class="metric-explanation">雙方達成共識、簽署協議並重啟危老重建案的速度與阻力。</p>
+                                    </div>
+                                    <div class="metric-bars">
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 A (打通)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 95%;"></div></div>
+                                            <span class="bar-val font-green">阻力極低 (雙方皆滿意推薦)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 B (分拆)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-yellow" style="width: 70%;"></div></div>
+                                            <span class="bar-val font-yellow">阻力中等 (林美純可能不甘)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 C (競標)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-red" style="width: 40%;"></div></div>
+                                            <span class="bar-val font-red">阻力高 (競標易造成情感撕裂)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-row">
+                                    <div class="metric-header">
+                                        <div class="metric-info">
+                                            <i class="fa-solid fa-maximize text-gold"></i>
+                                            <span class="metric-title">精華頂樓空間利用價值</span>
+                                        </div>
+                                        <p class="metric-explanation">10 樓頂層是否能發揮最大坪數整合效益，創造頂級住宅的增值價值。</p>
+                                    </div>
+                                    <div class="metric-bars">
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 A (打通)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 100%;"></div></div>
+                                            <span class="bar-val font-green">完美 (100% 打通整層)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 B (分拆)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-red" style="width: 40%;"></div></div>
+                                            <span class="bar-val font-red">低 (維持原 3 戶分拆設計)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 C (競標)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-yellow" style="width: 75%;"></div></div>
+                                            <span class="bar-val font-yellow">中等 (視得標方是否打通)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-row">
+                                    <div class="metric-header">
+                                        <div class="metric-info">
+                                            <i class="fa-solid fa-scale-balanced text-gold"></i>
+                                            <span class="metric-title">利益補償公平性 (妥協滿意度)</span>
+                                        </div>
+                                        <p class="metric-explanation">退讓方（陳政助）所獲得的權利價值與現金補償，是否能公平彌補其選配妥協。</p>
+                                    </div>
+                                    <div class="metric-bars">
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 A (打通)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 90%;"></div></div>
+                                            <span class="bar-val font-green">極佳 (8% 現金補貼 + 留有權值)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 B (分拆)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-yellow" style="width: 60%;"></div></div>
+                                            <span class="bar-val font-yellow">普通 (免補償，但至少不退至低樓層)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 C (競標)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 90%;"></div></div>
+                                            <span class="bar-val font-green">極佳 (由出價溢價直接回饋退讓方)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="conflict-solver-grid">

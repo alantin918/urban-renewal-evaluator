@@ -959,6 +959,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 衝突協商綁定與複製
     function setupConflictSolver() {
+        // 1. 綁定視角切換 Tab
+        const viewTabBtns = document.querySelectorAll('.view-tabs-control .view-tab-btn');
+        const viewPanels = document.querySelectorAll('.comparison-view-content .view-panel');
+        
+        if (viewTabBtns.length > 0) {
+            viewTabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetView = btn.dataset.view;
+                    
+                    // 切換按鈕 active 樣式
+                    viewTabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // 切換面板 active 樣式
+                    viewPanels.forEach(panel => {
+                        panel.classList.remove('active');
+                        if (panel.id === `view-${targetView}`) {
+                            panel.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        // 2. 點擊方案直接載入計算機
+        const schemeElements = document.querySelectorAll('.clickable-scheme');
+        schemeElements.forEach(el => {
+            el.addEventListener('click', (e) => {
+                // 獲取方案名稱
+                const schemeVal = el.getAttribute('data-scheme-value');
+                if (!schemeVal) return;
+                
+                // 1. 更新選配模式下拉選單
+                const modeSelect = document.getElementById('conflict-mode');
+                if (modeSelect) {
+                    modeSelect.value = schemeVal;
+                }
+                
+                // 2. 執行衝突協商計算以更新 MOU
+                solveConflict();
+                
+                // 3. 平滑滾動至參數與結果區，並給予視覺回饋
+                const solverGrid = document.querySelector('.conflict-solver-grid');
+                if (solverGrid) {
+                    solverGrid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // 視覺高亮效果
+                    solverGrid.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+                    solverGrid.style.borderColor = 'var(--color-gold)';
+                    solverGrid.style.boxShadow = '0 0 25px rgba(217, 119, 6, 0.4)';
+                    
+                    setTimeout(() => {
+                        solverGrid.style.borderColor = 'var(--color-border)';
+                        solverGrid.style.boxShadow = 'var(--shadow-md)';
+                    }, 1500);
+                }
+            });
+        });
+
         const btnSolve = document.getElementById('btn-solve-conflict');
         if (btnSolve) {
             btnSolve.addEventListener('click', solveConflict);
@@ -975,6 +1034,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 2000);
                 }).catch(err => {
                     console.error('複製失敗:', err);
+                });
+            });
+        }
+
+        // 綁定對比矩陣的行動版分頁切換
+        const matrixTabBtns = document.querySelectorAll('.matrix-tab-btn');
+        const matrixCols = document.querySelectorAll('.matrix-table .scheme-col');
+        if (matrixTabBtns.length > 0) {
+            matrixTabBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 阻止冒泡，避免觸發 clickable-scheme 的載入計算
+                    const scheme = btn.dataset.scheme;
+                    
+                    // 切換按鈕 active 樣式
+                    matrixTabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // 切換表格欄位 active-col 樣式
+                    matrixCols.forEach(col => {
+                        col.classList.remove('active-col');
+                        if (col.classList.contains(`scheme-${scheme}`)) {
+                            col.classList.add('active-col');
+                        }
+                    });
                 });
             });
         }
