@@ -982,4 +982,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 啟動選配衝突協商試算器
     setupConflictSolver();
+    solveConflict();
 });

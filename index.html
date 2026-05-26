@@ -61,6 +61,132 @@
                     </button>
                 </div>
             </div>
+            
+            <div class="homepage-sub-section" style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2.5rem;">
+                <h3 class="section-title"><i class="fa-solid fa-people-arrows text-gold"></i> 地主選配衝突與找補試算器 (實務協商模組)</h3>
+                <p class="section-desc">當多位地主同時爭取同一精華樓層（目前建築師規劃為 10 樓共 3 戶）且卡關時，此工具透過實務上的「戶別分拆選配」或「內部加價競標補償」模式，協助地主算出客觀的找補與補償金額，快速化解僵局。</p>
+                
+                <div class="conflict-solver-grid">
+                    <!-- 輸入控制面板 -->
+                    <div class="solver-input-card">
+                        <h4><i class="fa-solid fa-sliders text-gold"></i> 協商參數設定</h4>
+                        
+                        <div class="solver-form-group">
+                            <label for="conflict-unit">爭議目標戶/樓層</label>
+                            <input type="text" id="conflict-unit" class="form-control" value="10樓 (規劃A、B、C共3戶)">
+                        </div>
+                        <div class="solver-form-group">
+                            <label for="conflict-value">10樓官方總估值 (萬元)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="conflict-value" class="form-control" value="3000" min="100">
+                                <span class="unit">萬元</span>
+                            </div>
+                        </div>
+                        <div class="solver-form-group">
+                            <label for="conflict-mode">協商模式選擇</label>
+                            <select id="conflict-mode" class="form-control">
+                                <option value="premium-p2">方案 A：頂樓全拿打通 + 退至 2 樓現金補償 (林美純/陳政助卡關專用)</option>
+                                <option value="split-units">方案 B：頂樓戶別拆分選配 (陳政助選1戶，林美純選2戶，免補償)</option>
+                                <option value="bid-compensation">方案 C：地主自擬加價競標找補 (價高者得)</option>
+                            </select>
+                        </div>
+                        
+                        <hr class="solver-divider">
+                        
+                        <!-- 地主 A 參數 -->
+                        <div class="landowner-input-block">
+                            <div class="landowner-title-input">
+                                <h5>地主甲：</h5>
+                                <input type="text" id="landowner-a-name" class="form-control form-control-inline" value="林美純">
+                            </div>
+                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">原意願：想選滿 10 樓 (共 3 戶)</p>
+                            <div class="solver-row">
+                                <div class="solver-col">
+                                    <label for="landowner-a-total">可分回總價值 (萬)</label>
+                                    <input type="number" id="landowner-a-total" class="form-control" value="4500">
+                                </div>
+                                <div class="solver-col">
+                                    <label for="landowner-a-bid">若競標願加價 (萬)</label>
+                                    <input type="number" id="landowner-a-bid" class="form-control" value="150" title="林美純願意為10樓加價的上限">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="solver-divider">
+
+                        <!-- 地主 B 參數 -->
+                        <div class="landowner-input-block">
+                            <div class="landowner-title-input">
+                                <h5>地主乙：</h5>
+                                <input type="text" id="landowner-b-name" class="form-control form-control-inline" value="陳政助">
+                            </div>
+                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">原意願：自住10樓，賣出其餘</p>
+                            <div class="solver-row">
+                                <div class="solver-col">
+                                    <label for="landowner-b-total">可分回總價值 (萬)</label>
+                                    <input type="number" id="landowner-b-total" class="form-control" value="3500">
+                                </div>
+                                <div class="solver-col">
+                                    <label for="landowner-b-bid">若競標願加價 (萬)</label>
+                                    <input type="number" id="landowner-b-bid" class="form-control" value="200" title="陳政助願意為10樓加價的上限">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="solver-actions" style="margin-top: 1.5rem;">
+                            <button type="button" id="btn-solve-conflict" class="btn btn-primary" style="width: 100%;">
+                                <i class="fa-solid fa-gavel"></i> 開始衝突協商計算
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 計算輸出面板 -->
+                    <div class="solver-output-card">
+                        <h4><i class="fa-solid fa-square-poll-vertical text-gold"></i> 協商分析結果</h4>
+                        
+                        <!-- 競標判定 -->
+                        <div class="win-card" id="conflict-win-card">
+                            <div class="win-badge" id="conflict-winner-badge">最佳推薦妥協方案</div>
+                            <p class="win-desc" id="conflict-win-desc">系統判定中...</p>
+                        </div>
+
+                        <!-- 財務分配卡片 -->
+                        <div class="solver-result-details">
+                            <div class="result-col-wrapper">
+                                <div class="result-col-box">
+                                    <h5 id="winner-result-title">陳政助 (得標者)</h5>
+                                    <ul class="result-list">
+                                        <li>選配房屋：<strong id="win-unit-name">10樓A戶 (自住)</strong></li>
+                                        <li>取得代價：<span id="win-total-cost">1000</span> 萬 <span class="text-muted" id="win-cost-formula">(分拆選配，免溢價)</span></li>
+                                        <li>應付林美純補償：<span class="text-success" id="win-premium-pay">0</span> 萬元</li>
+                                        <li>剩餘可用權值：<span id="win-remain-val">2500</span> 萬 <span class="text-muted">(可去低樓層選配轉售)</span></li>
+                                    </ul>
+                                </div>
+                                <div class="result-col-box">
+                                    <h5 id="loser-result-title">林美純 (退讓者)</h5>
+                                    <ul class="result-list">
+                                        <li>妥協選配：<strong id="lose-unit-name">10樓B、C戶 (共2戶)</strong></li>
+                                        <li>獲得溢價補償：<span class="text-success" id="lose-premium-get">0</span> 萬元 <span class="text-muted">(無衝突免補償)</span></li>
+                                        <li>林美純實際總值：<span id="lose-actual-val">2000</span> 萬元 <span class="text-muted">(10樓兩戶官方估價)</span></li>
+                                        <li>剩餘可用權值：<span id="lose-remain-val">2500</span> 萬元 <span class="text-muted">(可再去低樓層選配)</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 協商協議大綱 -->
+                        <div class="mou-card">
+                            <h5><i class="fa-solid fa-file-contract text-gold"></i> 地主選配妥協協議書 (MOU) 草案</h5>
+                            <div class="mou-content-wrapper">
+                                <pre id="conflict-mou-text">載入中...</pre>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; margin-top: 0.75rem;">
+                                <button type="button" id="btn-copy-mou" class="btn btn-secondary btn-sm"><i class="fa-solid fa-copy"></i> 複製協議書</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- 2. 表單區 (多步驟表單) -->
@@ -486,132 +612,7 @@
                 </div>
             </div>
 
-            <!-- 地主選配衝突與找補試算器 -->
-            <div class="report-sub-section">
-                <h3 class="section-title"><i class="fa-solid fa-people-arrows text-gold"></i> 地主選配衝突與找補試算器 (實務協商模組)</h3>
-                <p class="section-desc">當多位地主同時爭取同一精華樓層（目前建築師規劃為 10 樓共 3 戶）且卡關時，此工具透過實務上的「戶別分拆選配」或「內部加價競標補償」模式，協助地主算出客觀的找補與補償金額，快速化解僵局。</p>
-                
-                <div class="conflict-solver-grid">
-                    <!-- 輸入控制面板 -->
-                    <div class="solver-input-card">
-                        <h4><i class="fa-solid fa-sliders text-gold"></i> 協商參數設定</h4>
-                        
-                        <div class="solver-form-group">
-                            <label for="conflict-unit">爭議目標戶/樓層</label>
-                            <input type="text" id="conflict-unit" class="form-control" value="10樓 (規劃A、B、C共3戶)">
-                        </div>
-                        <div class="solver-form-group">
-                            <label for="conflict-value">10樓官方總估值 (萬元)</label>
-                            <div class="input-wrapper">
-                                <input type="number" id="conflict-value" class="form-control" value="3000" min="100">
-                                <span class="unit">萬元</span>
-                            </div>
-                        </div>
-                        <div class="solver-form-group">
-                            <label for="conflict-mode">協商模式選擇</label>
-                            <select id="conflict-mode" class="form-control">
-                                <option value="premium-p2">方案 A：頂樓全拿打通 + 退至 2 樓現金補償 (林美純/陳政助卡關專用)</option>
-                                <option value="split-units">方案 B：頂樓戶別拆分選配 (陳政助選1戶，林美純選2戶，免補償)</option>
-                                <option value="bid-compensation">方案 C：地主自擬加價競標找補 (價高者得)</option>
-                            </select>
-                        </div>
-                        
-                        <hr class="solver-divider">
-                        
-                        <!-- 地主 A 參數 -->
-                        <div class="landowner-input-block">
-                            <div class="landowner-title-input">
-                                <h5>地主甲：</h5>
-                                <input type="text" id="landowner-a-name" class="form-control form-control-inline" value="林美純">
-                            </div>
-                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">原意願：想選滿 10 樓 (共 3 戶)</p>
-                            <div class="solver-row">
-                                <div class="solver-col">
-                                    <label for="landowner-a-total">可分回總價值 (萬)</label>
-                                    <input type="number" id="landowner-a-total" class="form-control" value="4500">
-                                </div>
-                                <div class="solver-col">
-                                    <label for="landowner-a-bid">若競標願加價 (萬)</label>
-                                    <input type="number" id="landowner-a-bid" class="form-control" value="150" title="林美純願意為10樓加價的上限">
-                                </div>
-                            </div>
-                        </div>
 
-                        <hr class="solver-divider">
-
-                        <!-- 地主 B 參數 -->
-                        <div class="landowner-input-block">
-                            <div class="landowner-title-input">
-                                <h5>地主乙：</h5>
-                                <input type="text" id="landowner-b-name" class="form-control form-control-inline" value="陳政助">
-                            </div>
-                            <p class="text-muted text-sm" style="font-size: 0.8rem; margin-bottom: 0.5rem;">原意願：自住10樓，賣出其餘</p>
-                            <div class="solver-row">
-                                <div class="solver-col">
-                                    <label for="landowner-b-total">可分回總價值 (萬)</label>
-                                    <input type="number" id="landowner-b-total" class="form-control" value="3500">
-                                </div>
-                                <div class="solver-col">
-                                    <label for="landowner-b-bid">若競標願加價 (萬)</label>
-                                    <input type="number" id="landowner-b-bid" class="form-control" value="200" title="陳政助願意為10樓加價的上限">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="solver-actions" style="margin-top: 1.5rem;">
-                            <button type="button" id="btn-solve-conflict" class="btn btn-primary" style="width: 100%;">
-                                <i class="fa-solid fa-gavel"></i> 開始衝突協商計算
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 計算輸出面板 -->
-                    <div class="solver-output-card">
-                        <h4><i class="fa-solid fa-square-poll-vertical text-gold"></i> 協商分析結果</h4>
-                        
-                        <!-- 競標判定 -->
-                        <div class="win-card" id="conflict-win-card">
-                            <div class="win-badge" id="conflict-winner-badge">最佳推薦妥協方案</div>
-                            <p class="win-desc" id="conflict-win-desc">系統判定中...</p>
-                        </div>
-
-                        <!-- 財務分配卡片 -->
-                        <div class="solver-result-details">
-                            <div class="result-col-wrapper">
-                                <div class="result-col-box">
-                                    <h5 id="winner-result-title">陳政助 (得標者)</h5>
-                                    <ul class="result-list">
-                                        <li>選配房屋：<strong id="win-unit-name">10樓A戶 (自住)</strong></li>
-                                        <li>取得代價：<span id="win-total-cost">1000</span> 萬 <span class="text-muted" id="win-cost-formula">(分拆選配，免溢價)</span></li>
-                                        <li>應付林美純補償：<span class="text-success" id="win-premium-pay">0</span> 萬元</li>
-                                        <li>剩餘可用權值：<span id="win-remain-val">2500</span> 萬 <span class="text-muted">(可去低樓層選配轉售)</span></li>
-                                    </ul>
-                                </div>
-                                <div class="result-col-box">
-                                    <h5 id="loser-result-title">林美純 (退讓者)</h5>
-                                    <ul class="result-list">
-                                        <li>妥協選配：<strong id="lose-unit-name">10樓B、C戶 (共2戶)</strong></li>
-                                        <li>獲得溢價補償：<span class="text-success" id="lose-premium-get">0</span> 萬元 <span class="text-muted">(無衝突免補償)</span></li>
-                                        <li>林美純實際總值：<span id="lose-actual-val">2000</span> 萬元 <span class="text-muted">(10樓兩戶官方估價)</span></li>
-                                        <li>剩餘可用權值：<span id="lose-remain-val">2500</span> 萬元 <span class="text-muted">(可再去低樓層選配)</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 協商協議大綱 -->
-                        <div class="mou-card">
-                            <h5><i class="fa-solid fa-file-contract text-gold"></i> 地主選配妥協協議書 (MOU) 草案</h5>
-                            <div class="mou-content-wrapper">
-                                <pre id="conflict-mou-text">載入中...</pre>
-                            </div>
-                            <div style="display: flex; justify-content: flex-end; margin-top: 0.75rem;">
-                                <button type="button" id="btn-copy-mou" class="btn btn-secondary btn-sm"><i class="fa-solid fa-copy"></i> 複製協議書</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="report-footer no-print">
                 <div class="alert-box">
