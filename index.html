@@ -97,18 +97,22 @@
                             <!-- 行動版切換分頁按鈕 (僅在手機版顯示) -->
                             <div class="matrix-tabs-control">
                                 <button type="button" class="matrix-tab-btn active" data-scheme="a">
+                                    <i class="fa-solid fa-crown"></i>
                                     <span>方案 A</span>
                                     <small>頂樓全拿</small>
                                 </button>
                                 <button type="button" class="matrix-tab-btn" data-scheme="b">
+                                    <i class="fa-solid fa-handshake"></i>
                                     <span>方案 B</span>
                                     <small>拆分選配</small>
                                 </button>
                                 <button type="button" class="matrix-tab-btn" data-scheme="c">
+                                    <i class="fa-solid fa-gavel"></i>
                                     <span>方案 C</span>
                                     <small>競標找補</small>
                                 </button>
                                 <button type="button" class="matrix-tab-btn" data-scheme="d">
+                                    <i class="fa-solid fa-people-arrows"></i>
                                     <span>方案 D</span>
                                     <small>多方讓渡</small>
                                 </button>
@@ -122,6 +126,7 @@
                                             <th class="scheme-col scheme-a active-col clickable-scheme" data-scheme-value="premium-p2">
                                                 <div class="scheme-header-cell">
                                                     <span class="scheme-badge best">最推薦妥協</span>
+                                                    <div class="scheme-icon scheme-icon-a"><i class="fa-solid fa-crown"></i></div>
                                                     <span class="scheme-name">方案 A</span>
                                                     <span class="scheme-desc">頂樓全拿 + 退讓現金補償</span>
                                                     <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
@@ -131,6 +136,7 @@
                                             <th class="scheme-col scheme-b clickable-scheme" data-scheme-value="split-units">
                                                 <div class="scheme-header-cell">
                                                     <span class="scheme-badge">和平共存</span>
+                                                    <div class="scheme-icon scheme-icon-b"><i class="fa-solid fa-handshake"></i></div>
                                                     <span class="scheme-name">方案 B</span>
                                                     <span class="scheme-desc">頂樓戶別拆分選配</span>
                                                     <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
@@ -140,6 +146,7 @@
                                             <th class="scheme-col scheme-c clickable-scheme" data-scheme-value="bid-compensation">
                                                 <div class="scheme-header-cell">
                                                     <span class="scheme-badge">競價機制</span>
+                                                    <div class="scheme-icon scheme-icon-c"><i class="fa-solid fa-gavel"></i></div>
                                                     <span class="scheme-name">方案 C</span>
                                                     <span class="scheme-desc">地主自擬加價競標</span>
                                                     <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
@@ -149,6 +156,7 @@
                                             <th class="scheme-col scheme-d clickable-scheme" data-scheme-value="swap-floor-p4">
                                                 <div class="scheme-header-cell">
                                                     <span class="scheme-badge">多方協商</span>
+                                                    <div class="scheme-icon scheme-icon-d"><i class="fa-solid fa-people-arrows"></i></div>
                                                     <span class="scheme-name">方案 D</span>
                                                     <span class="scheme-desc">讓渡 4 樓 + 補貼與分回</span>
                                                     <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
@@ -254,7 +262,7 @@
                                 <!-- 方案 A 卡片 -->
                                 <div class="visual-path-card card-scheme-a clickable-scheme" data-scheme-value="premium-p2">
                                     <div class="path-card-header">
-                                        <span class="badge-scheme best">方案 A - 頂樓全拿與退讓補償</span>
+                                        <span class="badge-scheme best"><i class="fa-solid fa-crown"></i> 方案 A - 頂樓全拿與退讓補償</span>
                                         <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
                                     </div>
                                     <div class="path-diagram">
@@ -289,7 +297,7 @@
                                 <!-- 方案 B 卡片 -->
                                 <div class="visual-path-card card-scheme-b clickable-scheme" data-scheme-value="split-units">
                                     <div class="path-card-header">
-                                        <span class="badge-scheme">方案 B - 頂樓分拆選配</span>
+                                        <span class="badge-scheme"><i class="fa-solid fa-handshake"></i> 方案 B - 頂樓分拆選配</span>
                                         <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
                                     </div>
                                     <div class="path-diagram">
@@ -325,7 +333,7 @@
                                 <!-- 方案 C 卡片 -->
                                 <div class="visual-path-card card-scheme-c clickable-scheme" data-scheme-value="bid-compensation">
                                     <div class="path-card-header">
-                                        <span class="badge-scheme">方案 C - 自擬加價競標</span>
+                                        <span class="badge-scheme"><i class="fa-solid fa-gavel"></i> 方案 C - 自擬加價競標</span>
                                         <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
                                     </div>
                                     <div class="path-diagram">
@@ -360,7 +368,7 @@
                                 <!-- 方案 D 卡片 -->
                                 <div class="visual-path-card card-scheme-d clickable-scheme" data-scheme-value="swap-floor-p4">
                                     <div class="path-card-header">
-                                        <span class="badge-scheme best">方案 D - 讓渡 4 樓多方協商</span>
+                                        <span class="badge-scheme best"><i class="fa-solid fa-people-arrows"></i> 方案 D - 讓渡 4 樓多方協商</span>
                                         <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
                                     </div>
                                     <div class="path-diagram">
