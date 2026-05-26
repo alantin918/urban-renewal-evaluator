@@ -325,6 +325,66 @@
                                         兩位地主秘密出價，出價高者取得 10 樓全層並支付該溢價作為補償金給退讓方，退讓方改至中低樓層。此方案規則透明，但容易流於意氣競標或導致退讓地主強烈不滿。
                                     </div>
                                 </div>
+
+                                <!-- 方案 D 卡片 -->
+                                <div class="visual-path-card card-scheme-d clickable-scheme" data-scheme-value="swap-floor-p4">
+                                    <div class="path-card-header">
+                                        <span class="badge-scheme best">方案 D - 讓渡 4 樓多方協商</span>
+                                        <div class="action-trigger"><i class="fa-solid fa-play"></i> 載入計算</div>
+                                    </div>
+                                    <div class="path-diagram">
+                                        <div class="path-node owner-a">
+                                            <span class="node-title" id="flow-d-owner-a-name">林美純 (地主甲)</span>
+                                            <div class="node-box gold-glow">
+                                                <span class="unit">10 樓全層 (打通)</span>
+                                                <span class="detail" id="flow-d-owner-a-detail">取得 49 坪 • 消耗 7,377 萬</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="path-arrow-flow">
+                                            <div class="flow-line">
+                                                <span class="flow-label" id="flow-d-flow-label-ab"><i class="fa-solid fa-coins text-gold"></i> 支付價差 159 萬</span>
+                                                <i class="fa-solid fa-chevron-down arrow-dir"></i>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="path-node owner-b">
+                                            <span class="node-title" id="flow-d-owner-b-name">陳政助 (地主乙)</span>
+                                            <div class="node-box success-glow">
+                                                <span class="unit">4 樓全層 (打通)</span>
+                                                <span class="detail" id="flow-d-owner-b-detail">取得 49 坪 • 消耗 7,034 萬</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="path-arrow-flow">
+                                            <div class="flow-line">
+                                                <span class="flow-label" id="flow-d-flow-label-cd"><i class="fa-solid fa-people-arrows text-gold"></i> 向林炳坤、陳有杞支付讓渡費 各 50 萬</span>
+                                                <i class="fa-solid fa-chevron-down arrow-dir"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="path-node-split">
+                                            <div class="split-side border-right">
+                                                <span class="node-title" id="flow-d-owner-c-name">林炳坤 (地主丙)</span>
+                                                <div class="node-box muted-glow">
+                                                    <span class="unit">讓出 4 樓</span>
+                                                    <span class="detail">獲 50 萬補償 • 改選他層</span>
+                                                </div>
+                                            </div>
+                                            <div class="split-vs"><i class="fa-solid fa-users text-success"></i></div>
+                                            <div class="split-side">
+                                                <span class="node-title" id="flow-d-owner-d-name">陳有杞 (地主丁)</span>
+                                                <div class="node-box muted-glow">
+                                                    <span class="unit">讓出 4 樓</span>
+                                                    <span class="detail">獲 50 萬補償 • 改選他層</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="path-summary-desc" id="flow-d-summary-desc">
+                                        林美純選滿 10 樓打通，陳政助選滿 4 樓打通。林炳坤與陳有杞同意讓渡 4 樓選配權並改選他層，雙方各取所需，林美純支付陳政助 159 萬差額補償，並與陳政助分攤丙、丁之讓渡費各 50 萬。
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -355,6 +415,11 @@
                                             <div class="bar-outer"><div class="bar-inner bar-yellow" style="width: 65%;"></div></div>
                                             <span class="bar-val font-yellow">中等 (視最終得標溢價)</span>
                                         </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 D (讓渡)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-red" id="metric-d-capital-bar" style="width: 75%;"></div></div>
+                                            <span class="bar-val font-red" id="metric-d-capital-val">中高壓力 (約需 2,877 萬)</span>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -381,6 +446,11 @@
                                             <span class="scheme-lbl">方案 C (競標)</span>
                                             <div class="bar-outer"><div class="bar-inner bar-red" style="width: 40%;"></div></div>
                                             <span class="bar-val font-red">阻力高 (競標易造成情感撕裂)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 D (讓渡)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 90%;"></div></div>
+                                            <span class="bar-val font-green">阻力極低 (多方共贏推薦)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -409,6 +479,11 @@
                                             <div class="bar-outer"><div class="bar-inner bar-yellow" style="width: 75%;"></div></div>
                                             <span class="bar-val font-yellow">中等 (視得標方是否打通)</span>
                                         </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 D (讓渡)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 100%;"></div></div>
+                                            <span class="bar-val font-green">完美 (100% 打通整層)</span>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -435,6 +510,11 @@
                                             <span class="scheme-lbl">方案 C (競標)</span>
                                             <div class="bar-outer"><div class="bar-inner bar-green" style="width: 90%;"></div></div>
                                             <span class="bar-val font-green">極佳 (由出價溢價直接回饋退讓方)</span>
+                                        </div>
+                                        <div class="metric-bar-group">
+                                            <span class="scheme-lbl">方案 D (讓渡)</span>
+                                            <div class="bar-outer"><div class="bar-inner bar-green" style="width: 95%;"></div></div>
+                                            <span class="bar-val font-green">極佳 (多方皆有補償/滿足)</span>
                                         </div>
                                     </div>
                                 </div>

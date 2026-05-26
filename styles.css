@@ -1922,7 +1922,7 @@ p {
 }
 
 .matrix-table th.scheme-col {
-    width: 26.66%;
+    width: 20%;
     text-align: center;
     background: rgba(255, 255, 255, 0.01);
 }
@@ -2134,6 +2134,15 @@ p {
     box-shadow: var(--shadow-lg), 0 0 25px rgba(217, 119, 6, 0.1);
 }
 
+.visual-path-card.card-scheme-d {
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+.visual-path-card.card-scheme-d:hover {
+    border-color: #8b5cf6;
+    box-shadow: var(--shadow-lg), 0 0 25px rgba(139, 92, 246, 0.15);
+}
+
 .path-card-header {
     display: flex;
     justify-content: space-between;
@@ -2291,6 +2300,17 @@ p {
     animation-duration: 0.9s;
 }
 
+.visual-path-card.card-scheme-d .flow-line::before {
+    background: linear-gradient(to bottom, 
+        rgba(139, 92, 246, 0.6) 0%, 
+        rgba(139, 92, 246, 0.6) 50%, 
+        transparent 50%, 
+        transparent 100%
+    );
+    background-size: 2px 12px;
+    animation-duration: 1.5s;
+}
+
 .flow-label {
     font-size: 0.7rem;
     font-weight: 600;
@@ -2306,6 +2326,11 @@ p {
 .visual-path-card.card-scheme-c .flow-label {
     color: #60a5fa;
     border-color: rgba(59, 130, 246, 0.3);
+}
+
+.visual-path-card.card-scheme-d .flow-label {
+    color: #c084fc;
+    border-color: rgba(139, 92, 246, 0.3);
 }
 
 .arrow-dir {
@@ -2328,6 +2353,11 @@ p {
 .visual-path-card.card-scheme-c .arrow-dir {
     color: #60a5fa;
     box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+}
+
+.visual-path-card.card-scheme-d .arrow-dir {
+    color: #c084fc;
+    box-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
 }
 
 .path-arrow-flow.empty {
@@ -2502,10 +2532,10 @@ p {
 @media (max-width: 992px) {
     .matrix-table th.dim-col,
     .matrix-table td.dim-col {
-        width: 25%;
+        width: 20%;
     }
     .matrix-table th.scheme-col {
-        width: 25%;
+        width: 20%;
     }
     
     .metric-row {

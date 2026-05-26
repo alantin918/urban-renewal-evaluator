@@ -692,12 +692,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalB = parseFloat(document.getElementById('landowner-b-total').value) || 3500;
         const bidB = parseFloat(document.getElementById('landowner-b-bid').value) || 0;
 
+        const nameC = document.getElementById('landowner-c-name') ? document.getElementById('landowner-c-name').value : "林炳坤";
+        const nameD = document.getElementById('landowner-d-name') ? document.getElementById('landowner-d-name').value : "陳有杞";
+        const compensationC = document.getElementById('landowner-c-compensation') ? (parseFloat(document.getElementById('landowner-c-compensation').value) || 0) : 50;
+        const compensationD = document.getElementById('landowner-d-compensation') ? (parseFloat(document.getElementById('landowner-d-compensation').value) || 0) : 50;
+
         const winnerBadge = document.getElementById('conflict-winner-badge');
         const winDesc = document.getElementById('conflict-win-desc');
 
         // 單價設定 (萬/坪)
         const p10Price = 150.55; 
         const p2Price = 141.55;  
+        const p4Price = 143.55;
         
         if (mode === 'premium-p2') {
             // === 方案 A: 頂樓全拿打通 + 退至 2 樓現金補償 (林美純/陳政助卡關專用) ===
@@ -843,6 +849,93 @@ document.addEventListener('DOMContentLoaded', () => {
 協議書立人簽署：
 甲方：                        （簽名蓋章）
 乙方：                        （簽名蓋章）
+中華民國 年 月 日`;
+
+            document.getElementById('conflict-mou-text').textContent = mouText;
+
+        } else if (mode === 'swap-floor-p4') {
+            // === 方案 D: 林炳坤、陳有杞讓渡 4 樓，陳政助選滿 4 樓，林美純選滿 10 樓 ===
+            const a10Area = 49;  // 林美純選滿 10 樓 49 坪
+            const b4Area = 49;   // 陳政助選滿 4 樓 49 坪
+
+            // 1. 林美純與陳政助各自的選配價格
+            const a10Cost = Math.round(a10Area * p10Price); // 7377 萬
+            const b4Cost = Math.round(b4Area * p4Price);   // 7034 萬
+
+            // 2. 樓層差價補貼 (林美純補貼陳政助 10樓與4樓之差價，以陳政助原欲選配 22.67坪 計算)
+            const priceDiffPerPing = p10Price - p4Price; // 7 萬/坪
+            const fairPremiumPay = Math.round(22.67 * priceDiffPerPing); // 159 萬元
+
+            // 3. 讓渡費分攤 (林炳坤、陳有杞各獲得 compensationC 與 compensationD 萬，林美純負擔 70%，陳政助負擔 30%)
+            const totalLetCompensation = compensationC + compensationD;
+            const aLetPay = Math.round(totalLetCompensation * 0.7); // 70% 讓渡費 (預設 70 萬)
+            const bLetPay = Math.round(totalLetCompensation * 0.3); // 30% 讓渡費 (預設 30 萬)
+
+            // 4. 雙方都更帳戶權值找補計算
+            const aRemain = totalA - a10Cost; // -2877 萬 (林美純需自備找補給專戶)
+            const bRemain = totalB - b4Cost;   // -3534 萬 (陳政助需自備找補給專戶)
+
+            const aActualCost = a10Cost + fairPremiumPay + aLetPay; // 林美純實際負擔
+            const bActualCost = b4Cost - fairPremiumPay + bLetPay; 
+
+            // 5. 更新 UI 狀態
+            winnerBadge.textContent = `方案 D 判定：多方協商，陳政助選滿 4 樓，林美純選滿 10 樓`;
+            winnerBadge.style.background = '#8b5cf6'; // 紫色
+            winnerBadge.style.boxShadow = '0 0 10px rgba(139, 92, 246, 0.5)';
+
+            winDesc.innerHTML = `經評估，地主 <strong>${nameC} (林炳坤)</strong> 與 <strong>${nameD} (陳有杞)</strong> 同意將 4 樓選配權讓渡予 <strong>${nameB} (陳政助)</strong>，改至其他樓層選配。<br>陳政助同意讓出 10 樓，改選 4 樓全層共 <strong>${b4Area} 坪</strong> 並打通自住；<strong>${nameA} (林美純)</strong> 則選滿 10 樓全層共 <strong>${a10Area} 坪</strong> 獨佔打通。<br>林美純需額外支付陳政助 <strong>${fairPremiumPay} 萬元</strong> 樓層差額補貼；且林美純與陳政助分別負擔丙、丁方的讓渡補償金（林美純分攤 ${aLetPay} 萬，陳政助分攤 ${bLetPay} 萬）。`;
+
+            // 得標者卡片 (林美純)
+            document.getElementById('winner-result-title').textContent = `${nameA} (選配 10 樓全層)`;
+            document.getElementById('win-unit-name').textContent = `10樓全層 (打通合併共 ${a10Area} 坪)`;
+            document.getElementById('win-total-cost').textContent = aActualCost.toLocaleString();
+            document.getElementById('win-cost-formula').textContent = `(房價 ${a10Cost} 萬 + 差額補貼 ${fairPremiumPay} 萬 + 讓渡分攤 ${aLetPay} 萬)`;
+            document.getElementById('win-premium-pay').textContent = (fairPremiumPay + aLetPay).toLocaleString();
+            document.getElementById('win-remain-val').textContent = aRemain.toLocaleString();
+
+            // 退讓者卡片 (陳政助)
+            document.getElementById('loser-result-title').textContent = `${nameB} (選配 4 樓全層)`;
+            document.getElementById('lose-unit-name').textContent = `4樓全層 (打通合併共 ${b4Area} 坪)`;
+            document.getElementById('lose-premium-get').textContent = fairPremiumPay.toLocaleString();
+            document.getElementById('lose-actual-val').textContent = bActualCost.toLocaleString();
+            document.getElementById('lose-remain-val').textContent = bRemain.toLocaleString();
+
+            // 6. 生成四方 MOU
+            const mouText = `都市更新/危老重建 地主選配讓渡與四方公平補償協議書 (草案)
+
+立協議書人：
+甲方（地主乙）：${nameB} (陳政助)
+乙方（地主甲）：${nameA} (林美純)
+丙方（讓渡地主一）：${nameC} (林炳坤)
+丁方（讓渡地主二）：${nameD} (陳有杞)
+
+緣甲、乙雙方同為本重建計畫之土地所有權人，因重建後新建物「10樓（總面積49坪）」發生選配重疊衝突。同時，丙、丁方於重建計畫中原擬選配「4樓房地」。為使全體地主利益一致，促成重建計畫順利推動，經四方本於善意、互利之原則，達成以下選配讓渡與多方公平補償協議：
+
+一、目標樓層與選配分配：
+    1. 乙方【林美純】選配取得 10 樓全層（共 49 坪，官方總核估值 ${a10Cost} 萬元），並享有打通合併使用之權利。
+    2. 甲方【陳政助】同意退讓 10 樓之選配主張，改為選配 4 樓全層（共 49 坪，官方總核估值 ${b4Cost} 萬元），並享有打通合併使用之權利。
+    3. 丙方【林炳坤】及丁方【陳有杞】同意釋出 4 樓選配權，改至其他樓層（如 2 樓、中低樓層）進行選配，或由都更計畫辦理差額找補折現。
+
+二、樓層差額與讓渡補償金約定：
+    雙方同意本多方協商之現金補償流向如下：
+    1. 樓層價差現金補償：由乙方【林美純】支付甲方【陳政助】新台幣【${fairPremiumPay}】萬元整，用以補償頂樓（10樓）與4樓之官方樓層單價價差（每坪差價 7 萬元，以甲方原欲選配面積 22.67 坪計算）。
+    2. 讓渡補償費：為感謝丙、丁方釋出 4 樓之選配權，由乙、甲方共同籌措新台幣【${totalLetCompensation}】萬元整支付予丙、丁方（丙方新台幣 ${compensationC} 萬元，丁方新台幣 ${compensationD} 萬元）。
+       - 乙方【林美純】同意負擔 70%，計新台幣【${aLetPay}】萬元整。
+       - 甲方【陳政助】同意負擔 30%，計新台幣【${bLetPay}】萬元整。
+
+三、給付與信託方式：
+    上述各項現金補償金與讓渡費，應於信託銀行通知辦理首期土建融撥款時，由各支付方一次性匯入信託專戶，並由建經公司依專款專用原則，直接撥付至各受款方之指定帳戶，不計入都更專案內找補。
+
+四、剩餘可用價值：
+    選配後雙方剩餘之更新前權利價值（甲方剩餘可用權值 ${bRemain} 萬元、乙方剩餘可用權值 ${aRemain} 萬元），得依本重建計畫之選配規約，選配其餘車位、店面，或於完工交屋時辦理差額找補折現。
+
+五、本協議草案僅供協商使用，雙方於正式都更契約與信託契約簽署後，本協議即作為其附件並同時生效。
+
+協議書立人簽署：
+甲方（地主乙）：                        （簽名蓋章）
+乙方（地主甲）：                        （簽名蓋章）
+丙方（讓渡地主一）：                    （簽名蓋章）
+丁方（讓渡地主二）：                    （簽名蓋章）
 中華民國 年 月 日`;
 
             document.getElementById('conflict-mou-text').textContent = mouText;
@@ -1120,6 +1213,72 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // 方案 D 資料計算 (讓渡 4 樓方案)
+            const flowD_a10Area = 49;
+            const flowD_b4Area = 49;
+            const flowD_a10Cost = Math.round(flowD_a10Area * p10Price); // 7377
+            const flowD_b4Cost = Math.round(flowD_b4Area * p4Price);   // 7034
+            
+            const flowD_aRemain = totalA - flowD_a10Cost;
+            const flowD_bRemain = totalB - flowD_b4Cost;
+
+            const flowD_priceDiffPerPing = p10Price - p4Price; // 7
+            const flowD_fairPremiumPay = Math.round(22.67 * flowD_priceDiffPerPing); // 159
+
+            const flowD_totalLetCompensation = compensationC + compensationD;
+            const flowD_aLetPay = Math.round(flowD_totalLetCompensation * 0.7); // 70
+            const flowD_bLetPay = Math.round(flowD_totalLetCompensation * 0.3); // 30
+
+            // 更新 Scheme D UI
+            const flowD_ownerANameEl = document.getElementById('flow-d-owner-a-name');
+            if (flowD_ownerANameEl) flowD_ownerANameEl.textContent = `${nameA} (地主甲)`;
+
+            const flowD_ownerADetailEl = document.getElementById('flow-d-owner-a-detail');
+            if (flowD_ownerADetailEl) {
+                const aRemainText = flowD_aRemain >= 0 ? `剩 ${flowD_aRemain.toLocaleString()} 萬權值` : `需找補 ${Math.abs(flowD_aRemain).toLocaleString()} 萬`;
+                flowD_ownerADetailEl.textContent = `取得 ${flowD_a10Area} 坪 • 消耗 ${flowD_a10Cost.toLocaleString()} 萬 • ${aRemainText}`;
+            }
+
+            const flowD_flowLabelABEl = document.getElementById('flow-d-flow-label-ab');
+            if (flowD_flowLabelABEl) {
+                flowD_flowLabelABEl.innerHTML = `<i class="fa-solid fa-coins text-gold"></i> 支付價差 ${flowD_fairPremiumPay} 萬`;
+            }
+
+            const flowD_ownerBNameEl = document.getElementById('flow-d-owner-b-name');
+            if (flowD_ownerBNameEl) flowD_ownerBNameEl.textContent = `${nameB} (地主乙)`;
+
+            const flowD_ownerBDetailEl = document.getElementById('flow-d-owner-b-detail');
+            if (flowD_ownerBDetailEl) {
+                const bRemainText = flowD_bRemain >= 0 ? `剩 ${flowD_bRemain.toLocaleString()} 萬權值` : `需找補 ${Math.abs(flowD_bRemain).toLocaleString()} 萬`;
+                flowD_ownerBDetailEl.textContent = `取得 ${flowD_b4Area} 坪 • 消耗 ${flowD_b4Cost.toLocaleString()} 萬 • ${bRemainText}`;
+            }
+
+            const flowD_flowLabelCDEl = document.getElementById('flow-d-flow-label-cd');
+            if (flowD_flowLabelCDEl) {
+                flowD_flowLabelCDEl.innerHTML = `<i class="fa-solid fa-people-arrows text-gold"></i> 向${nameC}、${nameD}支付讓渡費 (分攤為 ${nameA} ${flowD_aLetPay}萬 / ${nameB} ${flowD_bLetPay}萬)`;
+            }
+
+            const flowD_ownerCNameEl = document.getElementById('flow-d-owner-c-name');
+            if (flowD_ownerCNameEl) flowD_ownerCNameEl.textContent = `${nameC} (地主丙)`;
+
+            const flowD_ownerDNameEl = document.getElementById('flow-d-owner-d-name');
+            if (flowD_ownerDNameEl) flowD_ownerDNameEl.textContent = `${nameD} (地主丁)`;
+
+            const flowD_summaryDescEl = document.getElementById('flow-d-summary-desc');
+            if (flowD_summaryDescEl) {
+                flowD_summaryDescEl.textContent = `${nameA}選滿 10 樓打通，${nameB}選滿 4 樓打通。${nameC}與${nameD}同意讓渡 4 樓選配權並改選他層，雙方各取所需，${nameA}支付${nameB} ${flowD_fairPremiumPay} 萬差額補償，且分攤丙、丁讓渡補償費（各收 ${compensationC}萬 / ${compensationD}萬）。`;
+            }
+
+            // 動態更新量化指標中方案 D 的資金壓力
+            const flowD_totalShortfall = Math.max(0, flowD_a10Cost - totalA) + flowD_fairPremiumPay + flowD_aLetPay;
+            const metricDBar = document.getElementById('metric-d-capital-bar');
+            const metricDVal = document.getElementById('metric-d-capital-val');
+            if (metricDBar && metricDVal) {
+                const pressurePercentage = Math.min(100, Math.max(10, Math.round((flowD_totalShortfall / 4000) * 100)));
+                metricDBar.style.width = `${pressurePercentage}%`;
+                metricDVal.textContent = `中高壓力 (約需 ${flowD_totalShortfall.toLocaleString()} 萬)`;
+            }
+
         } catch (e) {
             console.error("更新圖解路徑發生錯誤:", e);
         }
@@ -1127,6 +1286,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 衝突協商綁定與複製
     function setupConflictSolver() {
+        // 綁定協商模式變更事件以顯示/隱藏讓渡地主輸入項
+        const modeSelect = document.getElementById('conflict-mode');
+        if (modeSelect) {
+            const toggleSwapInputs = () => {
+                const swapDivider = document.getElementById('swap-divider');
+                const swapInputsBlock = document.getElementById('landowner-c-d-block');
+                if (swapDivider && swapInputsBlock) {
+                    if (modeSelect.value === 'swap-floor-p4') {
+                        swapDivider.style.display = 'block';
+                        swapInputsBlock.style.display = 'block';
+                    } else {
+                        swapDivider.style.display = 'none';
+                        swapInputsBlock.style.display = 'none';
+                    }
+                }
+            };
+            modeSelect.addEventListener('change', toggleSwapInputs);
+            // 初始執行一次以防預設為方案 D
+            toggleSwapInputs();
+        }
         // 1. 綁定視角切換 Tab
         const viewTabBtns = document.querySelectorAll('.view-tabs-control .view-tab-btn');
         const viewPanels = document.querySelectorAll('.comparison-view-content .view-panel');
