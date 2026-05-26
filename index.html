@@ -108,6 +108,10 @@
                                     <span>方案 C</span>
                                     <small>競標找補</small>
                                 </button>
+                                <button type="button" class="matrix-tab-btn" data-scheme="d">
+                                    <span>方案 D</span>
+                                    <small>多方讓渡</small>
+                                </button>
                             </div>
 
                             <div class="table-responsive">
@@ -142,6 +146,15 @@
                                                     <div class="load-scheme-trigger"><i class="fa-solid fa-play"></i> 點擊載入計算</div>
                                                 </div>
                                             </th>
+                                            <th class="scheme-col scheme-d clickable-scheme" data-scheme-value="swap-floor-p4">
+                                                <div class="scheme-header-cell">
+                                                    <span class="scheme-badge">多方協商</span>
+                                                    <span class="scheme-name">方案 D</span>
+                                                    <span class="scheme-desc">讓渡 4 樓 + 補貼與分回</span>
+                                                    <div class="scheme-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+                                                    <div class="load-scheme-trigger"><i class="fa-solid fa-play"></i> 點擊載入計算</div>
+                                                </div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -150,24 +163,28 @@
                                             <td class="scheme-col scheme-a active-col text-success"><span class="status-badge yes"><i class="fa-solid fa-circle-check"></i> 可以打通</span><br><small>由林美純獨佔打通，結構與空間完整</small></td>
                                             <td class="scheme-col scheme-b text-danger"><span class="status-badge no"><i class="fa-solid fa-circle-xmark"></i> 無法打通</span><br><small>分拆三戶選配，維持原設計</small></td>
                                             <td class="scheme-col scheme-c text-warning"><span class="status-badge maybe"><i class="fa-solid fa-circle-question"></i> 視結果而定</span><br><small>由得標方決定是否全拿打通</small></td>
+                                            <td class="scheme-col scheme-d text-success"><span class="status-badge yes"><i class="fa-solid fa-circle-check"></i> 可以打通</span><br><small>林美純獨佔10樓打通；陳政助亦選4樓打通</small></td>
                                         </tr>
                                         <tr>
                                             <td class="dim-col"><i class="fa-solid fa-user-tag text-gold"></i> 林美純分回規劃</td>
                                             <td class="scheme-col scheme-a active-col"><strong>選滿 10 樓共 3 戶</strong><br><small>消耗 49 坪，約 7,377 萬<br>(超額選配，需付找補金)</small></td>
                                             <td class="scheme-col scheme-b"><strong>選 10 樓 B、C 戶 (2戶)</strong><br><small>消耗約 2,000 萬權值<br>(其餘 2,500 萬權值需去低樓層)</small></td>
                                             <td class="scheme-col scheme-c"><strong>視出價決定</strong><br><small>得標：拿 10 樓全層<br>未得標：去中低樓層選配</small></td>
+                                            <td class="scheme-col scheme-d"><strong>選滿 10 樓共 3 戶</strong><br><small>消耗 49 坪，約 7,377 萬<br>(超額選配，需付找補金與補償)</small></td>
                                         </tr>
                                         <tr>
                                             <td class="dim-col"><i class="fa-solid fa-user-tag text-gold"></i> 陳政助分回規劃</td>
                                             <td class="scheme-col scheme-a active-col"><strong>退至 2 樓選配自住戶</strong><br><small>消耗 22.67 坪，約 3,209 萬<br>(多得 257 萬現金 + 291 萬可用權值)</small></td>
                                             <td class="scheme-col scheme-b"><strong>選 10 樓 A 戶自住</strong><br><small>消耗約 1,000 萬權值<br>(無溢價，和平與林美純共存)</small></td>
                                             <td class="scheme-col scheme-c"><strong>視出價決定</strong><br><small>得標：拿 10 樓全層<br>未得標：去中低樓層選配</small></td>
+                                            <td class="scheme-col scheme-d"><strong>選滿 4 樓共 3 戶</strong><br><small>消耗 49 坪，約 7,034 萬<br>(超額選配，且獲得樓層差補貼)</small></td>
                                         </tr>
                                         <tr>
                                             <td class="dim-col"><i class="fa-solid fa-hand-holding-dollar text-gold"></i> 找補與現金補償</td>
                                             <td class="scheme-col scheme-a active-col text-success"><strong>林美純 額外支付<br>陳政助 257 萬現金</strong><br><small>(多得專戶找補退回 204 萬)</small></td>
                                             <td class="scheme-col scheme-b"><strong>雙方免額外補償</strong><br><small>(在 10 樓直接和平共存)</small></td>
                                             <td class="scheme-col scheme-c"><strong>得標方支付<br>加價溢價金給退讓方</strong></td>
+                                            <td class="scheme-col scheme-d text-success"><strong>林美純 支付陳 159 萬差額</strong><br><small>且林/陳分攤丙丁讓渡費(林70萬，陳30萬)</small></td>
                                         </tr>
                                         <tr>
                                             <td class="dim-col"><i class="fa-solid fa-plus text-success"></i> 方案優勢</td>
@@ -191,6 +208,13 @@
                                                     <li>以金錢衡量偏好，退讓方得高額補償</li>
                                                 </ul>
                                             </td>
+                                            <td class="scheme-col scheme-d text-success-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>雙方皆獲得打通大坪數自住戶(10樓/4樓)</li>
+                                                    <li>陳政助扣除讓渡費後淨賺 129 萬</li>
+                                                    <li>丙丁地主獲 50 萬補償，順利改選他樓</li>
+                                                </ul>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="dim-col"><i class="fa-solid fa-minus text-danger"></i> 主要挑戰 / 缺點</td>
@@ -209,6 +233,13 @@
                                                 <ul class="matrix-bullet-list">
                                                     <li>可能流於意氣之爭而抬高溢價</li>
                                                     <li>退讓方完全無緣頂樓精華層</li>
+                                                </ul>
+                                            </td>
+                                            <td class="scheme-col scheme-d text-danger-light">
+                                                <ul class="matrix-bullet-list">
+                                                    <li>需協商四位地主，溝通成本高</li>
+                                                    <li>雙方皆超選，期初自備找補資金壓力大</li>
+                                                    <li>林美純外加支付共 229 萬現金補貼</li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -545,6 +576,7 @@
                                 <option value="premium-p2">方案 A：頂樓全拿打通 + 退至 2 樓現金補償 (林美純/陳政助卡關專用)</option>
                                 <option value="split-units">方案 B：頂樓戶別拆分選配 (陳政助選1戶，林美純選2戶，免補償)</option>
                                 <option value="bid-compensation">方案 C：地主自擬加價競標找補 (價高者得)</option>
+                                <option value="swap-floor-p4">方案 D：多方讓渡 4 樓 (丙/丁讓渡，陳政助選滿4樓，林美純選滿10樓)</option>
                             </select>
                         </div>
                         
@@ -586,6 +618,35 @@
                                 <div class="solver-col">
                                     <label for="landowner-b-bid">若競標願加價 (萬)</label>
                                     <input type="number" id="landowner-b-bid" class="form-control" value="200" title="陳政助願意為10樓加價的上限">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="solver-divider" id="swap-divider" style="display: none;">
+
+                        <!-- 地主 C & D 讓渡參數 -->
+                        <div class="landowner-input-block" id="landowner-c-d-block" style="display: none;">
+                            <div class="landowner-title-input">
+                                <h5>讓渡地主丙：</h5>
+                                <input type="text" id="landowner-c-name" class="form-control form-control-inline" value="林炳坤">
+                            </div>
+                            <div class="solver-row" style="margin-bottom: 0.8rem;">
+                                <div class="solver-col">
+                                    <label for="landowner-c-compensation">丙方讓渡補償金 (萬)</label>
+                                    <input type="number" id="landowner-c-compensation" class="form-control" value="50">
+                                </div>
+                            </div>
+                            
+                            <hr class="solver-divider" style="margin: 0.8rem 0; border-top: 1px dashed rgba(255,255,255,0.1);">
+                            
+                            <div class="landowner-title-input">
+                                <h5>讓渡地主丁：</h5>
+                                <input type="text" id="landowner-d-name" class="form-control form-control-inline" value="陳有杞">
+                            </div>
+                            <div class="solver-row">
+                                <div class="solver-col">
+                                    <label for="landowner-d-compensation">丁方讓渡補償金 (萬)</label>
+                                    <input type="number" id="landowner-d-compensation" class="form-control" value="50">
                                 </div>
                             </div>
                         </div>
