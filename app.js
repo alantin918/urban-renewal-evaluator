@@ -746,15 +746,22 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('win-unit-name').textContent = `10樓全層 (打通合併共 ${a10Area} 坪)`;
             document.getElementById('win-total-cost').textContent = a10Cost.toLocaleString();
             document.getElementById('win-cost-formula').textContent = "(獨佔打通，補償陳政助)";
+            document.getElementById('win-premium-pay-label').textContent = `應付 ${nameB} 補償：`;
             document.getElementById('win-premium-pay').textContent = fairPremiumPay.toLocaleString();
             document.getElementById('win-remain-val').textContent = aRemain.toLocaleString();
+            document.getElementById('win-remain-val-desc').textContent = aRemain < 0 ? "(超額選配，需自備找補給專戶)" : "(可再去低樓層選配)";
 
             // 退讓者卡片 (陳政助)
             document.getElementById('loser-result-title').textContent = `${nameB} (讓步至 2 樓)`;
             document.getElementById('lose-unit-name').textContent = `2樓選配戶 (${bDesiredArea} 坪)`;
+            document.getElementById('lose-premium-get-label').textContent = `獲得溢價補償：`;
             document.getElementById('lose-premium-get').textContent = fairPremiumPay.toLocaleString();
+            document.getElementById('lose-premium-get-desc').textContent = `(由林美純支付之補貼)`;
+            document.getElementById('lose-actual-val-label').textContent = `${nameB} 實際總值：`;
             document.getElementById('lose-actual-val').textContent = bActualTotal.toLocaleString();
+            document.getElementById('lose-actual-val-desc').textContent = `(2樓新屋價值 + 獲得補償金)`;
             document.getElementById('lose-remain-val').textContent = bRemain.toLocaleString();
+            document.getElementById('lose-remain-val-desc').textContent = bRemain < 0 ? "(超額選配，需自備找補)" : "(可再去低樓層選配)";
 
             // 5. 生成公平補償 MOU
             const mouText = `都市更新/危老重建 地主選配讓步與公平補償協議書 (草案)
@@ -815,14 +822,21 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('win-unit-name').textContent = '10樓 A 戶 (自住)';
             document.getElementById('win-total-cost').textContent = winnerCost.toLocaleString();
             document.getElementById('win-cost-formula').textContent = "(分拆選配，免溢價)";
+            document.getElementById('win-premium-pay-label').textContent = `應付 ${nameA} 補償：`;
             document.getElementById('win-premium-pay').textContent = winnerPayToLoser.toLocaleString();
             document.getElementById('win-remain-val').textContent = winnerRemain.toLocaleString();
+            document.getElementById('win-remain-val-desc').textContent = winnerRemain < 0 ? "(超額選配，需自備找補)" : "(可去低樓層選配房屋/車位)";
 
             document.getElementById('loser-result-title').textContent = `${nameA} (選配 10 樓 B、C 戶)`;
             document.getElementById('lose-unit-name').textContent = '10樓 B、C 戶 (共2戶)';
+            document.getElementById('lose-premium-get-label').textContent = `獲得溢價補償：`;
             document.getElementById('lose-premium-get').textContent = winnerPayToLoser.toLocaleString();
+            document.getElementById('lose-premium-get-desc').textContent = `(無衝突免補償)`;
+            document.getElementById('lose-actual-val-label').textContent = `${nameA} 實際總值：`;
             document.getElementById('lose-actual-val').textContent = loserActualTotal.toLocaleString();
+            document.getElementById('lose-actual-val-desc').textContent = `(10樓兩戶官方核估值)`;
             document.getElementById('lose-remain-val').textContent = loserRemain.toLocaleString();
+            document.getElementById('lose-remain-val-desc').textContent = loserRemain < 0 ? "(超額選配，需自備找補)" : "(可去低樓層選配房屋/車位)";
 
             // 生成拆分選配 MOU
             const mouText = `都市更新/危老重建 地主選配讓步與戶別分拆協議書 (草案)
@@ -890,15 +904,22 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('win-unit-name').textContent = `10樓全層 (打通合併共 ${a10Area} 坪)`;
             document.getElementById('win-total-cost').textContent = aActualCost.toLocaleString();
             document.getElementById('win-cost-formula').textContent = `(房價 ${a10Cost} 萬 + 差額補貼 ${fairPremiumPay} 萬 + 讓渡分攤 ${aLetPay} 萬)`;
+            document.getElementById('win-premium-pay-label').textContent = `應付補貼與讓渡：`;
             document.getElementById('win-premium-pay').textContent = (fairPremiumPay + aLetPay).toLocaleString();
             document.getElementById('win-remain-val').textContent = aRemain.toLocaleString();
+            document.getElementById('win-remain-val-desc').textContent = aRemain < 0 ? "(超額選配，需自備找補給專戶)" : "(可再去低樓層選配)";
 
             // 退讓者卡片 (陳政助)
             document.getElementById('loser-result-title').textContent = `${nameB} (選配 4 樓全層)`;
             document.getElementById('lose-unit-name').textContent = `4樓全層 (打通合併共 ${b4Area} 坪)`;
+            document.getElementById('lose-premium-get-label').textContent = `獲得差價補貼：`;
             document.getElementById('lose-premium-get').textContent = fairPremiumPay.toLocaleString();
+            document.getElementById('lose-premium-get-desc').textContent = `(由林美純支付之樓層價差)`;
+            document.getElementById('lose-actual-val-label').textContent = `${nameB} 實際負擔：`;
             document.getElementById('lose-actual-val').textContent = bActualCost.toLocaleString();
+            document.getElementById('lose-actual-val-desc').textContent = `(4樓房價 - 差額補貼 + 讓渡分攤)`;
             document.getElementById('lose-remain-val').textContent = bRemain.toLocaleString();
+            document.getElementById('lose-remain-val-desc').textContent = bRemain < 0 ? "(超額選配，需自備找補給專戶)" : "(可再去低樓層選配)";
 
             // 6. 生成四方 MOU
             const mouText = `都市更新/危老重建 地主選配讓渡與四方公平補償協議書 (草案)
@@ -1005,15 +1026,22 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('win-unit-name').textContent = conflictUnit;
             document.getElementById('win-total-cost').textContent = winnerCost.toLocaleString();
             document.getElementById('win-cost-formula').textContent = `(官方價 + 自發加價 ${winnerBid} 萬)`;
+            document.getElementById('win-premium-pay-label').textContent = `應付 ${loserName} 補償：`;
             document.getElementById('win-premium-pay').textContent = winnerPayToLoser.toLocaleString();
             document.getElementById('win-remain-val').textContent = winnerRemain.toLocaleString();
+            document.getElementById('win-remain-val-desc').textContent = winnerRemain < 0 ? "(超額選配，需自備找補)" : "(可去低樓層選配房屋/車位)";
 
             // 退讓者卡片
             document.getElementById('loser-result-title').textContent = `${loserName} (協商退讓)`;
             document.getElementById('lose-unit-name').textContent = `中低樓層 (官方核估約 ${loserUnitCost.toLocaleString()} 萬)`;
+            document.getElementById('lose-premium-get-label').textContent = `獲得溢價補償：`;
             document.getElementById('lose-premium-get').textContent = winnerPayToLoser.toLocaleString();
+            document.getElementById('lose-premium-get-desc').textContent = `(由得標方競標溢價金補貼)`;
+            document.getElementById('lose-actual-val-label').textContent = `${loserName} 實際總值：`;
             document.getElementById('lose-actual-val').textContent = loserActualTotal.toLocaleString();
+            document.getElementById('lose-actual-val-desc').textContent = `(退讓分回估值 + 獲得競標補償)`;
             document.getElementById('lose-remain-val').textContent = loserRemain.toLocaleString();
+            document.getElementById('lose-remain-val-desc').textContent = loserRemain < 0 ? "(超額選配，需自備找補)" : "(可去低樓層選配房屋/車位)";
 
             // 生成競標找補 MOU
             const mouText = `都市更新/危老重建 地主選配讓步與溢價補償協議書 (草案)
